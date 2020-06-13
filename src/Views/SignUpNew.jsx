@@ -14,7 +14,7 @@ import Person from '@material-ui/icons/PersonRounded';
 import SignUp from '../static/Mobile login-pana.svg';
 
 import { Toolbar, makeStyles, Fab, InputAdornment, Link } from '@material-ui/core';
-import { useHistory,Link as RouterLink } from 'react-router-dom';
+import { useHistory, Link as RouterLink } from 'react-router-dom';
 
 const styles = makeStyles(t => ({
     root: {
@@ -110,7 +110,7 @@ const styles = makeStyles(t => ({
         background: Theme.boxColor,
         marginBottom: 12,
         width: '40%',
-        [t.breakpoints.down('xs')]:{
+        [t.breakpoints.down('xs')]: {
             width: '85%',
 
         }
@@ -120,9 +120,9 @@ const styles = makeStyles(t => ({
         color: '#fff',
         textTransform: 'uppercase',
     },
-    res:{
-        [t.breakpoints.down('xs')]:{
-            display:'contents'
+    res: {
+        [t.breakpoints.down('xs')]: {
+            display: 'contents'
         }
     }
 }))
@@ -199,7 +199,7 @@ const Login = (props) => {
                                     <CardDepth>
                                         <Input
                                             id="userName"
-                                            value={state.userEmail}
+                                            value={state.userName}
                                             disableUnderline
                                             onChange={handleChange}
                                             fullWidth
@@ -227,7 +227,7 @@ const Login = (props) => {
                                     <CardDepth>
                                         <Input
                                             id="pass"
-                                            value={state.userEmail}
+                                            value={state.pass}
                                             disableUnderline
                                             onChange={handleChange}
                                             fullWidth
@@ -241,10 +241,10 @@ const Login = (props) => {
                                     <CardDepth>
                                         <Input
                                             id="conPass"
-                                            value={state.userEmail}
+                                            value={state.conPass}
                                             disableUnderline
                                             onChange={handleChange}
-                                            fullWidth
+                                            fullWidth type='password'
                                             autoComplete="off"
                                             placeholder="Confirm Password"
                                             classes={{ input: sty.input }}></Input>
@@ -284,9 +284,9 @@ const Login = (props) => {
                                     </CardDepth>
                                 </Grid>
                             </Grid>
-                            <Grid container alignItems='center' style={{ flexDirection: 'column',color:'#fff' }} justify='center' xs={12}>
+                            <Grid container alignItems='center' style={{ flexDirection: 'column', color: '#fff' }} justify='center' xs={12}>
                                 {/* <Fab variant='extended' classes={{ label: sty.buttonLabel }} className={sty.button}>Sign Up</Fab> */}
-                               
+
                                 <Grid className={sty.res} justify='center' alignItems='center' container>
 
                                     <Fab variant='extended' onClick={() => { }} classes={{ label: sty.buttonLabel }} className={sty.button}>Sign Up</Fab>
