@@ -1,0 +1,36 @@
+#outerbox {
+	height: 314px;
+	width: 314px;
+	box-shadow: inset 0px 0px 0px #c6cce1, inset 0px 0px 0px white !important;
+	animation-name: animation;
+	animation-duration: 5s;
+	animation-timing-function: ease-in-out;
+	animation-iteration-count: infinite;
+	animation-play-state: running;
+	transform: rotate(45deg);
+	box-shadow: inset 4px 3px 7px #c6cce1, inset -3px -4px 7px white;
+}
+
+@-webkit-keyframes animation {
+	0% {
+		background-color: red;
+	}
+	50.0% {
+		background-color: orange;
+	} /* your chosen 'mid' color */
+	100.0% {
+		background-color: red;
+	}
+}
+
+@keyframes animation {
+	0% {
+		background-color: red;
+	}
+	50.0% {
+		background-color: orange;
+	}
+	100.0% {
+		background-color: red;
+	}
+}
