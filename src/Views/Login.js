@@ -13,6 +13,14 @@ import CardComponent from '../Components/cardEmbossed';
 import Person from '@material-ui/icons/PersonRounded';
 import { Toolbar, makeStyles, Fab, Link } from '@material-ui/core';
 import { useHistory, Link as RouterLink } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropType from 'prop-types'
+import { login } from '../redux/actions/student'
+import { useEffect } from 'react';
+import { toast } from 'react-toastify'
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+
 
 const styles = makeStyles(t => ({
 	root: {
@@ -86,7 +94,9 @@ const styles = makeStyles(t => ({
 	button: {
 		background: Theme.boxColor,
 		marginBottom: 12,
-		width: '100%'
+		width: '100%',
+		boxShadow: `4px 4px 5px 1px rgba(00,00,00,0.2),-4px -4px 5px 1px rgba(255,255,255,0.2)`,
+
 
 	},
 	buttonLabel: {
@@ -95,29 +105,46 @@ const styles = makeStyles(t => ({
 	},
 }))
 
-const logInUser = (props) => {
-	const reqParams = {
-		"username": document.getElementById("userEmail").value,
-		"password": document.getElementById("password").value,
-	};
 
-	axios
-		.post(`http://localhost:8089/api/login`, reqParams)
-		.then((res) => {
-			alert("Logged In")
-			console.log(res);
-			console.log(res.data);
-		})
-		.catch((error) => alert('Log In Api Error'));
-};
 
-const Login = (props) => {
+const LoginPage = (props) => {
 	const [state, setState] = React.useState({ userEmail: '', password: '' })
+    const [loading, setLoading] = React.useState(false)
+
 	const handleChange = e => {
-		setState({ [e.target.id]: e.target.value })
+		setState({...state, [e.target.id]: e.target.value })
 	}
 	const sty = styles()
 	const history = useHistory()
+
+	useEffect(() => {
+        document.title = 'Login | Qriocty Box'
+    }, [])
+
+    useEffect(() => {
+        console.log(props);
+        if (props.auth) {
+            setLoading(false)
+            if (props.auth.success) {
+                history.push('/dashboard')
+            } else if (props.auth.error) {
+                toast.error(props.auth.message)
+                console.log(props.auth.message);
+
+            }
+        }
+    }, [props])
+
+	const logInUser = (e) => {
+		e.preventDefault()
+		const reqParams = {
+			userEmailId: state.userEmail,
+			userPassword: state.password,
+		};
+		props.login(reqParams)
+		setLoading(true)
+	}
+
 	return (
 		<>
 			<Toolbar style={{ background: Theme.boxColor }} />
@@ -135,7 +162,7 @@ const Login = (props) => {
 						<CardComponent style={{
 							paddingLeft: '10%',
 							paddingRight: '10%',
-							color:'#fff'
+							color: '#fff'
 						}}>
 							<div style={{
 								paddingTop: '6%',
@@ -163,11 +190,12 @@ const Login = (props) => {
 									}
 								/>
 							</div>
-							<div className={sty.inputArea} >
+							<form onSubmit={logInUser} style={{display:'contents'}}><div className={sty.inputArea} >
 								<Grid container justify='center' className={sty.logInput}>
 									<CardDepth>
 										<Input
 											id="userEmail"
+											required
 											value={state.userEmail}
 											disableUnderline
 											onChange={handleChange}
@@ -182,6 +210,7 @@ const Login = (props) => {
 									<CardDepth>
 										<Input
 											id="password"
+											required
 											value={state.password}
 											onChange={handleChange}
 											disableUnderline
@@ -193,10 +222,10 @@ const Login = (props) => {
 									</CardDepth>
 								</Grid>
 							</div>
-						
-							<Fab variant='extended' onClick={logInUser} classes={{ label: sty.buttonLabel }} className={sty.button}>Login</Fab>
 
+							<Fab variant='extended' type='submit'  classes={{ label: sty.buttonLabel }} className={sty.button}>Login{loading && <CircularProgress/>}</Fab>
 
+</form>
 							<Typography variant='body2' style={{ color: '#fff', padding: '0 12px 12px' }} >OR</Typography>
 
 							<Fab variant='extended' classes={{ label: sty.buttonLabel }} className={sty.button}>Use Google</Fab>
@@ -209,5 +238,14 @@ const Login = (props) => {
 		</>
 	);
 };
-
-export default (Login);
+LoginPage.prototype = {
+	auth: PropType.object.isRequired,
+	login: PropType.func.isRequired
+}
+const mapToProp = {
+	login
+}
+const mapToState = (state) => ({
+	auth: state.admin.login
+})
+export default connect(mapToState, mapToProp)(LoginPage);

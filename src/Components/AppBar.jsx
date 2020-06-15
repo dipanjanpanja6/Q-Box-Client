@@ -121,7 +121,7 @@ export default function PrimarySearchAppBar(props) {
 
     function ElevationScroll(props) {
         const { children, window } = props;
-        console.log(props);
+        // console.log(props);
 
         const trigger = useScrollTrigger({
             disableHysteresis: true,

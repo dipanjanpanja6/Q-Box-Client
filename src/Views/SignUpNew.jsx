@@ -15,6 +15,12 @@ import SignUp from '../static/Mobile login-pana.svg';
 
 import { Toolbar, makeStyles, Fab, InputAdornment, Link } from '@material-ui/core';
 import { useHistory, Link as RouterLink } from 'react-router-dom';
+import { useEffect } from 'react';
+import { toast } from 'react-toastify'
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+
+
 
 const styles = makeStyles(t => ({
     root: {
@@ -110,6 +116,7 @@ const styles = makeStyles(t => ({
         background: Theme.boxColor,
         marginBottom: 12,
         width: '40%',
+        boxShadow: `4px 4px 5px 1px rgba(00,00,00,0.2),-4px -4px 5px 1px rgba(255,255,255,0.2)`,
         [t.breakpoints.down('xs')]: {
             width: '85%',
 
@@ -129,12 +136,15 @@ const styles = makeStyles(t => ({
 
 const logInUser = (props) => {
     const reqParams = {
-        "username": document.getElementById("userEmail").value,
-        "password": document.getElementById("password").value,
+        "userName":"username",
+        "fkUserRoleId":3,
+        "userEmailId":"user@user.com",
+        "userPassword":"password",
+        "userPhoneNumber":"9900990099"
     };
 
     axios
-        .post(`http://localhost:8089/api/login`, reqParams)
+        .post(`http://208.109.12.146:8089/api/signup`, reqParams)
         .then((res) => {
             alert("Logged In")
             console.log(res);
