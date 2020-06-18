@@ -39,74 +39,76 @@ const useStyles = makeStyles((theme) => ({
     title: {
         display: 'block',
         color: '#fff',
+        fontWeight: 'bold',
+        fontFamily: " -apple-system, BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans- serif,Apple Color Emoji,Segoe UI Emoji, Segoe UI Symbol"
         // [theme.breakpoints.up('sm')]: {
         //     display: 'block',
         // },
     },
     search: {
-        position: 'relative',
-        borderRadius: theme.shape.borderRadius,
-        backgroundColor: fade(theme.palette.common.white, 0.15),
-        '&:hover': {
-            backgroundColor: fade(theme.palette.common.white, 0.25),
-        },
-        marginRight: theme.spacing(2),
-        marginLeft: 0,
-        width: '100%',
-        [theme.breakpoints.up('sm')]: {
-            marginLeft: theme.spacing(3),
-            width: 'auto',
-        },
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: fade(theme.palette.common.white, 0.15),
+    '&:hover': {
+        backgroundColor: fade(theme.palette.common.white, 0.25),
     },
+    marginRight: theme.spacing(2),
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+        marginLeft: theme.spacing(3),
+        width: 'auto',
+    },
+},
     searchIcon: {
-        padding: theme.spacing(0, 2),
-        height: '100%',
-        position: 'absolute',
-        pointerEvents: 'none',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+},
     inputRoot: {
-        color: 'inherit',
-    },
+    color: 'inherit',
+},
     inputInput: {
-        padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
-        paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-        transition: theme.transitions.create('width'),
-        width: '100%',
-        [theme.breakpoints.up('md')]: {
-            width: '20ch',
-        },
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
+        width: '20ch',
     },
+},
     sectionDesktop: {
-        display: 'none',
-        [theme.breakpoints.up('md')]: {
-            display: 'flex',
-        },
+    display: 'none',
+    [theme.breakpoints.up('md')]: {
+        display: 'flex',
     },
+},
     sectionMobile: {
-        display: 'flex',
-        [theme.breakpoints.up('md')]: {
-            display: 'none',
-        },
+    display: 'flex',
+    [theme.breakpoints.up('md')]: {
+        display: 'none',
     },
+},
     button: {
-        borderRadius: '50%',
-        height: `calc(1.75vh + 1.75vw)`,
-        width: `calc(1.75vh + 1.75vw)`,
-        background: Theme.boxColor,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        boxShadow: `4px 4px 5px 1px rgba(00,00,00,0.2),-4px -4px 5px 1px rgba(255,255,255,0.2)`,
-    },
+    borderRadius: '50%',
+    height: `calc(1.75vh + 1.75vw)`,
+    width: `calc(1.75vh + 1.75vw)`,
+    background: Theme.boxColor,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    boxShadow: `4px 4px 5px 1px rgba(00,00,00,0.2),-4px -4px 5px 1px rgba(255,255,255,0.2)`,
+},
     menu: {
-        background: Theme.boxColor,
-        right: 16,
-        left: 'auto !important'
-    }
+    background: Theme.boxColor,
+    right: 16,
+    left: 'auto !important'
+}
 
 }));
 
@@ -152,19 +154,16 @@ export default function PrimarySearchAppBar(props) {
         setMobileMoreAnchorEl(event.currentTarget);
     };
 
-    const menuId = 'primary-search-account-menu';
-
-
     const mobileMenuId = 'primary-search-account-menu-mobile';
     const renderMobileMenu = (
         <Menu
             classes={{ paper: classes.menu }}
             anchorEl={mobileMoreAnchorEl}
-            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            // anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
             id={mobileMenuId}
             keepMounted
-            anchorPosition={{ left: '100px' }}
-            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+            anchorPosition={{ left: 100 }}
+            // transformOrigin={{ vertical: 'top', horizontal: 'right' }}
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
@@ -219,7 +218,7 @@ export default function PrimarySearchAppBar(props) {
                     <Toolbar>
                         <IconButton
                             disableRipple
-                            onClick={() => { history.push('/home') }}
+                            onClick={() => { history.push('/') }}
                             edge="start"
                             className={classes.menuButton}
                             color="inherit"
@@ -231,17 +230,17 @@ export default function PrimarySearchAppBar(props) {
                                             <rect id="Rectangle_760" data-name="Rectangle 760" width="343" height="343" rx="47" transform="translate(717 577.795) rotate(-45)" fill="#008c9e" />
                                         </clipPath>
                                         <radialGradient id="radial-gradient" cx="0.75" cy="0.017" r="1.105" gradientTransform="matrix(-0.18, 0.984, -2.541, -0.466, 0.928, -0.714)" gradientUnits="objectBoundingBox">
-                                            <stop offset="0" stop-color="#64b4d2" />
-                                            <stop offset="0.328" stop-color="#8167f2" />
-                                            <stop offset="0.696" stop-color="#8a51e4" />
-                                            <stop offset="1" stop-color="#8d3ddc" />
+                                            <stop offset="0" stopColor="#64b4d2" />
+                                            <stop offset="0.328" stopColor="#8167f2" />
+                                            <stop offset="0.696" stopColor="#8a51e4" />
+                                            <stop offset="1" stopColor="#8d3ddc" />
                                         </radialGradient>
                                     </defs>
                                     <g id="Group_8040" data-name="Group 8040" transform="translate(10807 15148)">
                                         <g id="Group_8036" data-name="Group 8036" transform="translate(395 -384)">
                                             <g id="Group_8031" data-name="Group 8031" transform="translate(-6 2)">
                                                 <g id="Group_8030" data-name="Group 8030" transform="translate(-11913 -15062)">
-                                                    <g id="Mask_Group_7642" data-name="Mask Group 7642" transform="translate(0 -39.256)" clip-path="url(#clip-path)">
+                                                    <g id="Mask_Group_7642" data-name="Mask Group 7642" transform="translate(0 -39.256)" clipPath="url(#clip-path)">
                                                         <g id="Group_7900" data-name="Group 7900" transform="translate(288.6 806.8)" opacity="0">
                                                             <path id="Path_1940" data-name="Path 1940" d="M-22262.424-15210.229s-67.6-320-150.3-320-133.031,72.727-225.453,72.727-130.91,230.3-130.91,230.3l20.689,543.6h458.8Z" transform="translate(23190.4 14994.2)" fill="url(#radial-gradient)" />
                                                         </g>
@@ -253,7 +252,7 @@ export default function PrimarySearchAppBar(props) {
                                                             <path id="Path_1943" data-name="Path 1943" d="M-20566-14968.8h59.068s2.264,36.972,27.594,52.419c11.2,6.83,26.787,15.257,41.1,16.072,17.449,1,32.637-6.7,32.637-6.7l-61.008,59.8s-45.273-12.615-70.121-43.018S-20566-14968.8-20566-14968.8Z" transform="translate(-1855.4 -948.203)" fill="#fff" />
                                                         </g>
                                                     </g>
-                                                    <g id="Rectangle_777" data-name="Rectangle 777" transform="translate(717 538.537) rotate(-45)" fill="none" stroke="#fff" stroke-width="3">
+                                                    <g id="Rectangle_777" data-name="Rectangle 777" transform="translate(717 538.537) rotate(-45)" fill="none" stroke="#fff" strokeWidth="3">
                                                         <rect width="343" height="343" rx="47" stroke="none" />
                                                         <rect x="1.5" y="1.5" width="340" height="340" rx="45.5" fill="none" />
                                                     </g>
@@ -264,8 +263,8 @@ export default function PrimarySearchAppBar(props) {
                                 </svg>
                             </SvgIcon>
                         </IconButton>
-                        <Link to='/home' underline='none' component={RouterLink} className={classes.title} variant="h6" noWrap>
-                            RIOCITY BOX
+                        <Link to='/' underline='none' component={RouterLink} className={classes.title} variant="h6" noWrap>
+                            RIOCTY BOX
           </Link>
                         <div className={classes.grow} />
                         {/* <div className={classes.search}>

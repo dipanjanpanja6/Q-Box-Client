@@ -18,7 +18,9 @@ import { useHistory, Link as RouterLink } from 'react-router-dom';
 import { useEffect } from 'react';
 import { toast } from 'react-toastify'
 import CircularProgress from '@material-ui/core/CircularProgress';
-
+import { connect } from 'react-redux';
+import { signUp } from '../redux/actions/student'
+import PropType from 'prop-types'
 
 
 
@@ -136,11 +138,11 @@ const styles = makeStyles(t => ({
 
 const logInUser = (props) => {
     const reqParams = {
-        "userName":"username",
-        "fkUserRoleId":3,
-        "userEmailId":"user@user.com",
-        "userPassword":"password",
-        "userPhoneNumber":"9900990099"
+        "userName": "username",
+        "fkUserRoleId": 3,
+        "userEmailId": "user@user.com",
+        "userPassword": "password",
+        "userPhoneNumber": "9900990099"
     };
 
     axios
@@ -153,13 +155,44 @@ const logInUser = (props) => {
         .catch((error) => alert('Log In Api Error'));
 };
 
-const Login = (props) => {
-    const [state, setState] = React.useState({ userEmail: '', password: '' })
+const SignUpS = (props) => {
+    const [state, setState] = React.useState({fkUserRoleId:3, userName: '', userEmail: '', conPass: '', ph: '', password: '', pass: '' })
     const handleChange = e => {
-        setState({ [e.target.id]: e.target.value })
+        setState({...state, [e.target.id]: e.target.value })
     }
     const sty = styles()
+    const [loading, setLoading] = React.useState(false)
+
     const history = useHistory()
+
+    useEffect(() => {
+        document.title = 'Create new account | Qriocty Box'
+    }, [])
+
+    useEffect(() => {
+        console.log(props);
+        if (props.auth) {
+            setLoading(false)
+            if (props.auth.success) {
+                history.push('/dashboard')
+            } else if (props.auth.error) {
+                toast.error(props.auth.message)
+                console.log(props.auth.message);
+
+            }
+        }
+    }, [props])
+
+    const SignUpUser = (e) => {
+        e.preventDefault()
+        const reqParams = {
+            userEmailId: state.userEmail,
+            userPassword: state.password,
+        };
+        props.signUp(state)
+        setLoading(true)
+    }
+
     return (
         <>
             <Toolbar style={{ background: Theme.boxColor }} />
@@ -204,82 +237,86 @@ const Login = (props) => {
                                     }
                                 />
                             </div>
-                            <Grid container className={sty.inputArea} >
-                                <Grid container justify='center' className={sty.logInput}>
-                                    <CardDepth>
-                                        <Input
-                                            id="userName"
-                                            value={state.userName}
-                                            disableUnderline
-                                            onChange={handleChange}
-                                            fullWidth
+                            <form onSubmit={SignUpUser} style={{ display: 'contents' }}>
+                                <Grid container className={sty.inputArea} >
 
-                                            autoComplete="off"
-                                            placeholder="Name"
-                                            classes={{ input: sty.input }}></Input>
-                                    </CardDepth>
-                                </Grid>
-                                <Grid container justify='center' className={sty.logInput}>
-                                    <CardDepth>
-                                        <Input
-                                            id="userEmail"
-                                            value={state.userEmail}
-                                            disableUnderline
-                                            onChange={handleChange}
-                                            fullWidth
-                                            type='email'
-                                            autoComplete="off"
-                                            placeholder="E-mail"
-                                            classes={{ input: sty.input }}></Input>
-                                    </CardDepth>
-                                </Grid>
-                                <Grid container justify='center' className={sty.logInput}>
-                                    <CardDepth>
-                                        <Input
-                                            id="pass"
-                                            value={state.pass}
-                                            disableUnderline
-                                            onChange={handleChange}
-                                            fullWidth
-                                            type='password'
-                                            autoComplete="off"
-                                            placeholder="Password"
-                                            classes={{ input: sty.input }}></Input>
-                                    </CardDepth>
-                                </Grid>
-                                <Grid container justify='center' className={sty.logInput}>
-                                    <CardDepth>
-                                        <Input
-                                            id="conPass"
-                                            value={state.conPass}
-                                            disableUnderline
-                                            onChange={handleChange}
-                                            fullWidth type='password'
-                                            autoComplete="off"
-                                            placeholder="Confirm Password"
-                                            classes={{ input: sty.input }}></Input>
-                                    </CardDepth>
-                                </Grid>
-                                <Grid container justify='center' className={sty.logInput}>
-                                    <CardDepth>
-                                        <Input
-                                            id="ph"
-                                            value={state.ph}
-                                            disableUnderline
-                                            onChange={handleChange}
-                                            fullWidth
-                                            type='number'
-                                            autoComplete="off"
-                                            placeholder="Phone Number"
-                                            startAdornment={
-                                                <InputAdornment position="start">
-                                                    +91
+                                    <Grid container justify='center' className={sty.logInput}>
+                                        <CardDepth>
+                                            <Input
+                                                id="userName"
+                                                value={state.userName}
+                                                disableUnderline
+                                                onChange={handleChange}
+                                                fullWidth
+                                                required
+                                                autoComplete="off"
+                                                placeholder="Name"
+                                                classes={{ input: sty.input }}></Input>
+                                        </CardDepth>
+                                    </Grid>
+                                    <Grid container justify='center' className={sty.logInput}>
+                                        <CardDepth>
+                                            <Input
+                                                id="userEmail"
+                                                value={state.userEmail}
+                                                disableUnderline
+                                                onChange={handleChange}
+                                                fullWidth
+                                                required
+                                                type='email'
+                                                placeholder="E-mail"
+                                                classes={{ input: sty.input }}></Input>
+                                        </CardDepth>
+                                    </Grid>
+                                    <Grid container justify='center' className={sty.logInput}>
+                                        <CardDepth>
+                                            <Input
+                                                id="pass"
+                                                value={state.pass}
+                                                disableUnderline
+                                                onChange={handleChange}
+                                                fullWidth
+                                                required
+                                                type='password'
+                                                
+                                                placeholder="Password"
+                                                classes={{ input: sty.input }}></Input>
+                                        </CardDepth>
+                                    </Grid>
+                                    <Grid container justify='center' className={sty.logInput}>
+                                        <CardDepth>
+                                            <Input
+                                                id="conPass"
+                                                value={state.conPass}
+                                                disableUnderline
+                                                onChange={handleChange}
+                                                fullWidth type='password'
+                                                required
+                                                placeholder="Confirm Password"
+                                                classes={{ input: sty.input }}></Input>
+                                        </CardDepth>
+                                    </Grid>
+                                    <Grid container justify='center' className={sty.logInput}>
+                                        <CardDepth>
+                                            <Input
+                                                id="ph"
+                                                value={state.ph}
+                                                disableUnderline
+                                                onChange={handleChange}
+                                                fullWidth
+                                                required
+                                                type='number'
+                                                autoComplete="off"
+                                                placeholder="Phone Number"
+                                                startAdornment={
+                                                    <InputAdornment position="start">
+                                                        +91
                                                 </InputAdornment>
-                                            }
-                                            classes={{ input: sty.inputPh }}></Input>
-                                    </CardDepth>
-                                </Grid>
-                                <Grid container justify='center' className={sty.logInput}>
+                                                }
+                                                classes={{ input: sty.inputPh }}></Input>
+                                        </CardDepth>
+                                    </Grid>
+                                    {/* <Grid container justify='center' className={sty.logInput}>
                                     <CardDepth>
                                         <Input
                                             id="otp"
@@ -292,23 +329,23 @@ const Login = (props) => {
                                             placeholder="OTP"
                                             classes={{ input: sty.input }}></Input>
                                     </CardDepth>
+                                </Grid> */}
                                 </Grid>
-                            </Grid>
-                            <Grid container alignItems='center' style={{ flexDirection: 'column', color: '#fff' }} justify='center' xs={12}>
-                                {/* <Fab variant='extended' classes={{ label: sty.buttonLabel }} className={sty.button}>Sign Up</Fab> */}
+                                <Grid container alignItems='center' style={{ flexDirection: 'column', color: '#fff' }} justify='center' xs={12}>
+                                    {/* <Fab variant='extended' classes={{ label: sty.buttonLabel }} className={sty.button}>Sign Up</Fab> */}
 
-                                <Grid className={sty.res} justify='center' alignItems='center' container>
+                                    <Grid className={sty.res} justify='center' alignItems='center' container>
 
-                                    <Fab variant='extended' onClick={() => { }} classes={{ label: sty.buttonLabel }} className={sty.button}>Sign Up</Fab>
+                                        <Fab variant='extended' type='submit' classes={{ label: sty.buttonLabel }} className={sty.button}>Sign Up</Fab>
 
 
-                                    <Typography variant='body2' style={{ color: '#fff', padding: '0 12px 12px' }} >OR</Typography>
+                                        <Typography variant='body2' style={{ color: '#fff', padding: '0 12px 12px' }} >OR</Typography>
 
-                                    <Fab variant='extended' classes={{ label: sty.buttonLabel }} className={sty.button}>Use Google</Fab>
+                                        <Fab variant='extended' classes={{ label: sty.buttonLabel }} className={sty.button}>Use Google</Fab>
+                                    </Grid>
+                                    <Link to='/login' color='inherit' component={RouterLink} >Existing user! Login here</Link>
                                 </Grid>
-                                <Link to='/login' color='inherit' component={RouterLink} >Existing user! Login here</Link>
-                            </Grid>
-
+                            </form>
                         </CardComponent>
                     </Grid>
                 </Grid>
@@ -316,5 +353,14 @@ const Login = (props) => {
         </>
     );
 };
-
-export default (Login);
+SignUpS.prototype = {
+    auth: PropType.object.isRequired,
+    signUp: PropType.func.isRequired
+}
+const mapToProp = {
+    signUp
+}
+const mapToState = (state) => ({
+    auth: state.admin.login
+})
+export default connect(mapToState, mapToProp)(SignUpS);

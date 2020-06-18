@@ -12,13 +12,7 @@ import Person from '@material-ui/icons/PersonRounded';
 import { MenuItem, Checkbox, Toolbar } from '@material-ui/core';
 
 const styles = (theme) => ({
-	root: {
-		// height: '100vh',
-		// width: '100vw',
-		display: 'flex',
-		flexDirection: 'column',
-		background: Theme.boxColor,
-	},
+
 	baseStyle: {
 		borderRadius: '50%',
 	},
@@ -47,12 +41,10 @@ const styles = (theme) => ({
 		},
 	},
 	content: {
-		flexGrow: 1,
-		display: 'flex',
-		flexDirection: 'row',
 		justifyContent: 'space-around',
 		alignItems: 'center',
 		backgroundColor: 'white',
+		width: '80%',
 		paddingTop: 12,
 
 	},
@@ -78,33 +70,28 @@ const styles = (theme) => ({
 
 const Login = (props) => {
 	const { classes } = props;
-	const [hasOption,setHasOption]=React.useState(false)
-	const [option,setOption]=React.useState({})
+	const [hasOption, setHasOption] = React.useState(false)
+	const [option, setOption] = React.useState({})
 
-	const handleChange=(e)=>{
-
-	}
-	const imageUpload=()=>{
+	const handleChange = (e) => {
 
 	}
-	const uploadVideo=()=>{
+	const imageUpload = () => {
 
 	}
-	const submit=()=>{
+	const uploadVideo = () => {
+
+	}
+	const submit = () => {
 
 	}
 
 	return (
-		<div className={classes.root}>
-			<Toolbar/>
+		<div style={{minHeight:"100vh",backgroundColor:'#fff'}}>
+			<Toolbar style={{ background: Theme.boxColor }} />
 
-			<div className={classes.content}>
-				<div
-					style={{
-						height: pxToVh(1000),
-						// padding:'0 35px'
-						width: '80vw',
-					}}>
+			<Grid container justify='center' alignItems='center'>
+				<Grid container justify='center' className={classes.content}>
 					<CardComponent>
 						<div
 							style={{
@@ -204,7 +191,7 @@ const Login = (props) => {
 									</CardDepth></div>
 							</Grid>
 						</Grid>
-						
+
 						<Grid container justify='space-around'>
 
 							<div
@@ -255,66 +242,66 @@ const Login = (props) => {
 								</CardDepth>
 							</div>
 						</Grid>
-{hasOption &&
-						<Grid container justify='space-around'>
-							<Grid item>
-								<div className={classes.inputDiv}>
-									<CardDepth >
-										<Input
-											id="course"
-											onChange={handleChange}
-											select='true'
-											disableUnderline
-											fullWidth
-											autoComplete="off"
-											placeholder="Course"
-											// inputComponent='select'
+						{hasOption &&
+							<Grid container justify='space-around'>
+								<Grid item>
+									<div className={classes.inputDiv}>
+										<CardDepth >
+											<Input
+												id="course"
+												onChange={handleChange}
+												select='true'
+												disableUnderline
+												fullWidth
+												autoComplete="off"
+												placeholder="Course"
+												// inputComponent='select'
 
-											classes={{ input: classes.input }}>
+												classes={{ input: classes.input }}>
 
-										</Input>
-									</CardDepth></div>
-								<div className={classes.inputDiv}>
-									<CardDepth>
-										<Input
-											onChange={handleChange}
-											id='subject'
-											disableUnderline
-											fullWidth
-											autoComplete="off"
-											placeholder="Subject"
-											classes={{ input: classes.input }}></Input>
-									</CardDepth></div>
+											</Input>
+										</CardDepth></div>
+									<div className={classes.inputDiv}>
+										<CardDepth>
+											<Input
+												onChange={handleChange}
+												id='subject'
+												disableUnderline
+												fullWidth
+												autoComplete="off"
+												placeholder="Subject"
+												classes={{ input: classes.input }}></Input>
+										</CardDepth></div>
+								</Grid>
+
+								<Grid item>
+									<div className={classes.inputDiv}>
+
+										<CardDepth>
+											<Input
+												id="stream"
+												onChange={handleChange}
+												disableUnderline
+												fullWidth
+												autoComplete="off"
+												placeholder="Stream"
+												classes={{ input: classes.input }}></Input>
+										</CardDepth>
+									</div>
+									<div className={classes.inputDiv}>
+
+										<CardDepth>
+											<Input
+												onChange={handleChange}
+												id='chapters'
+												disableUnderline
+												fullWidth
+												autoComplete="off"
+												placeholder="Chapters"
+												classes={{ input: classes.input }}></Input>
+										</CardDepth></div>
+								</Grid>
 							</Grid>
-
-							<Grid item>
-								<div className={classes.inputDiv}>
-
-									<CardDepth>
-										<Input
-											id="stream"
-											onChange={handleChange}
-											disableUnderline
-											fullWidth
-											autoComplete="off"
-											placeholder="Stream"
-											classes={{ input: classes.input }}></Input>
-									</CardDepth>
-								</div>
-								<div className={classes.inputDiv}>
-
-									<CardDepth>
-										<Input
-											onChange={handleChange}
-											id='chapters'
-											disableUnderline
-											fullWidth
-											autoComplete="off"
-											placeholder="Chapters"
-											classes={{ input: classes.input }}></Input>
-									</CardDepth></div>
-							</Grid>
-						</Grid>
 						}
 
 						<Grid container justify='space-evenly' style={{ paddingBottom: 22, paddingTop: 12 }} >
@@ -371,16 +358,17 @@ const Login = (props) => {
 							</div>
 							<Grid item>
 								<Grid container>
-									<Checkbox disableRipple onChange={(e)=>{setHasOption(e.target.checked)}} style={{ padding: '0 3px' }} /><Typography>Has options</Typography>
+									<Checkbox disableRipple onChange={(e) => { setHasOption(e.target.checked) }} style={{ padding: '0 3px' }} /><Typography>Has options</Typography>
 								</Grid>
 							</Grid>
 						</Grid>
 
 
 					</CardComponent>
-				</div>
 
-			</div>
+
+				</Grid>
+			</Grid>
 		</div>
 	);
 };

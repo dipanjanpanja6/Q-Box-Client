@@ -89,14 +89,14 @@ const styles = makeStyles((t => ({
 const About = () => {
 	const sty = styles()
 	const the = useTheme()
-	const responsive = useMediaQuery(the.breakpoints.down('xs'));
-	const radius =responsive?"": { style: { borderRadius: 111 } };
+	// const responsive = useMediaQuery(the.breakpoints.down('xs'));
+	// const radius =responsive?"": { style: { borderRadius: 111 } };
 	return (
 		<div className={sty.root}>
 			<Toolbar style={{ background: Theme.boxColor }} />
 			<Grid container alignItems="center"
 				justify="center" className={sty.frame}>
-				<Grid container justify='center' sx={12} sm={6}
+				<Grid container justify='center' item sx={12} sm={6}
 					style={{ height: '100%' }}>
 					<img
 						src={Team}
@@ -125,7 +125,7 @@ const About = () => {
 				<CardDepth >
 					<Typography className={sty.heading} >Our Uniqueness</Typography>
 					<Grid item sm={12} className={sty.d2} >
-						<CardComponent {...radius} >
+						<CardComponent  >
 							<div className={sty.ourU} >
 								<Typography variant='subtitle2' style={{ lineHeight: 2 }}>
 
@@ -177,7 +177,7 @@ problem statement.
 			<Grid container style={{ padding: 30 }} >
 				<CardComponent>
 					<Grid className={sty.d2} >
-						<CardDepth  {...radius}>
+						<CardDepth  >
 							<Grid item sm={12} style={{
 								margin: '12px 30px', justifyContent: 'center',
 								display: 'flex',
@@ -199,7 +199,7 @@ problem statement.
 					</Grid>
 
 					<Grid className={sty.d2} >
-						<CardDepth  {...radius}>
+						<CardDepth  >
 							<Grid item sm={12} style={{
 								margin: '12px 30px', justifyContent: 'center',
 								display: 'flex',
@@ -229,7 +229,7 @@ problem statement.
 					<Typography className={sty.heading} style={{ paddingBottom: 30 }}>{' - Aim'}</Typography>
 					<Grid justify='space-around' container >
 						<Grid item sm={6} className={sty.d3}>
-							<CardComponent {...radius}  >
+							<CardComponent   >
 								<div style={{ padding: 50, color: '#fff' }}>
 									<Typography variant='h6' style={{ lineHeight: 2, paddingTop: 22, textAlign: 'center' }}>
 										<b>
@@ -266,7 +266,7 @@ problem statement.
 						</Grid>
 
 						<Grid item sm={6} className={sty.d3}>
-							<CardComponent {...radius} >
+							<CardComponent  >
 								<div style={{ padding: 50, color: '#fff',alignSelf: 'flex-start' }}>
 									<Typography variant='h6' style={{ lineHeight: 2, paddingTop: 22, textAlign: 'center' }}>
 										<b>

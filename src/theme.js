@@ -15,7 +15,8 @@ export const Theme = {
 		color1: 'white',
 		color2: 'white',
 		placeholder: '#8C44DF',
-		heading: '#8C44DF',
+		heading2: '#8C44DF',
+		heading: '#8a2be2',
 	},
 	buttonColor: {
 		// color1: '#00C9B7',

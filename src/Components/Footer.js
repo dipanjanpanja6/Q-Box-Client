@@ -127,7 +127,7 @@ const styles = makeStyles(t => ({
 const Footer = () => {
 	const sty = styles();
 	return (
-		<Grid justify='center' alignItems='center' className={sty.root} >
+		<Grid container justify='center' alignItems='center' className={sty.root} >
 			<img src={BigLogo} style={{ height: 150, width: 150 }} />
 			{/* <Typography variant='h5'>QRIOCTY BOX</Typography> */}
 			<Typography variant='subtitle1'>Hunt for Curiosity</Typography>

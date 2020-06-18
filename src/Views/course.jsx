@@ -58,6 +58,7 @@ const styles = makeStyles(t => ({
 
 const data = [
     {
+        id: 1,
         name: 'graduate technical game',
         data: [
             {
@@ -68,6 +69,7 @@ const data = [
         ]
     },
     {
+        id: 2,
         name: 'gate',
         data: [
             {
@@ -86,7 +88,7 @@ const Course = (props) => {
     const listRender = data ? data.map(p => {
         return (
 
-            <Grid className={sty.root} container>
+            <Grid key={p.id} className={sty.root} container>
                 <Grid item container justify='center' xs={12}>
                     <Typography className={sty.header} variant='h4'>{data[0].name}</Typography>
                 </Grid>
@@ -110,7 +112,7 @@ const Course = (props) => {
                                 </Grid>
                             </CardDepth>
                         </Grid>
-                    
+
 
                     </CardComponent>
                 </Grid>

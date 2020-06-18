@@ -3,9 +3,8 @@ import { LOGIN, AUTH, ACTIVATE } from '../type'
 import { toast } from 'react-toastify'
 
 export const login = (data) => (dispatch) => {
-    // fetch(`${url}/api/login`, {
         
-fetch("208.109.12.146:7000/api/login",{
+fetch(`${url}/api/login`,{
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-type': 'Application/json' },
@@ -20,7 +19,7 @@ fetch("208.109.12.146:7000/api/login",{
 
         })
     }).catch(r => {
-        console.log(r);
+        console.log(r); 
         toast.error('Something went wrong ! Try again')
     })
 }
@@ -52,7 +51,7 @@ fetch("208.109.12.146:7000/api/login",{
 export const signUp = (data) => (dispatch) => {
     // console.log(data);
 
-    fetch(`${url}/signUp`, {
+    fetch(`${url}/api/signup`, {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-type': 'Application/json' },
