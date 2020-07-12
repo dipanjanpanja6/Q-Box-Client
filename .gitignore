@@ -8,7 +8,7 @@ firebase-debug.log*
 
 # Firebase cache
 .firebase/
-
+.vscode/
 # Firebase config
 
 # Uncomment this if you'd like others to create their own Firebase project.
@@ -41,11 +41,12 @@ bower_components
 .lock-wscript
 
 # Compiled binary addons (http://nodejs.org/api/addons.html)
-build/Release
+# build/
 
 # Dependency directories
 node_modules/
-
+package-lock.json
+firebase.json
 # Optional npm cache directory
 .npm
 

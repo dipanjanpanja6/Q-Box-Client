@@ -4,15 +4,14 @@ import MuiExpansionPanel from '@material-ui/core/ExpansionPanel';
 import MuiExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import MuiExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
-import { Toolbar, Grid, Fab, Card } from '@material-ui/core';
+import { Toolbar, Grid, Fab } from '@material-ui/core';
 import { Theme, pxToVh } from '../theme';
 
-import Footer from '../Components/Footer'
+import Footer from '../Components/Footer' 
 import CardComponent from '../Components/cardEmbossed';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { useEffect } from 'react';
 
-import BookCard from '../Components/bookCard'
-import { useHistory } from 'react-router-dom';
 
 const ExpansionPanel = withStyles({
   root: {
@@ -69,8 +68,7 @@ const styles = makeStyles(t => ({
     textAlign: 'center',
     color: Theme.textColor.heading,
     fontWeight: 'bold',
-    padding: '1% 0 3%',
-    width:'100%',
+    padding: '4% 0',
     [t.breakpoints.down('xs')]: {
       padding: '8vw 0',
 
@@ -113,43 +111,46 @@ const styles = makeStyles(t => ({
 
 export default function CustomizedExpansionPanels() {
   const sty = styles()
-  const history = useHistory()
   const [expanded, setExpanded] = React.useState(0);
+useEffect(()=>{
+  document.title="Mechanical Engineering - Q-Book | Qriocty Box"
+})
+
 
   const handleChange = (panel) => (event, newExpanded) => {
     setExpanded(newExpanded ? panel : false);
   };
   var data = [
     {
-      id: 1,
+      id:1,
       name: 'engineering mechanics',
       chapter: [
         "chapter 1", "chapter 2", "chapter 3"
       ]
     },
     {
-      id: 1,
+      id:2,
       name: 'Mathematics',
       chapter: [
         "chapter 1", "chapter 2", "chapter 3", "chapter 4"
       ]
     },
     {
-      id: 1,
+      id:3,
       name: 'heat transfer',
       chapter: [
         "chapter 1", "chapter 2",
       ]
     },
     {
-      id: 1,
+      id:4,
       name: 'RAC',
       chapter: [
         "chapter 1", "chapter 2",
       ]
     },
     {
-      id: 1,
+      id:1,
       name: 'M. Design',
       chapter: [
         "chapter 1", "chapter 2",
@@ -161,48 +162,41 @@ export default function CustomizedExpansionPanels() {
 
 
   const map = data ? data.map((p, i) => {
-    return (
-      <CardComponent key={p.id} item {...style} >
-        <ExpansionPanel square expanded={expanded === i} onChange={handleChange(i)}>
-          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon style={{ color: '#fff' }} />} aria-controls="panel1d-content" id="panel1d-header">
-            <Typography>{p.name}</Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
+    return ( 
+        <CardComponent key={p.id} item {...style} >
+          <ExpansionPanel square expanded={expanded === i} onChange={handleChange(i)}>
+            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon style={{color:'#fff'}} />} aria-controls="panel1d-content" id="panel1d-header">
+              <Typography>{p.name}</Typography>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
 
-            <Grid container alignItems='center' justify='center' className={sty.box} >
-              {p.chapter.map((p, i) => {
-                return (
-                  <Fab key={i} variant='extended' type="submit" classes={{ label: sty.buttonLabel }} className={sty.button}>
-                    <Typography variant='subtitle1' style={{ padding: 12 }}>{p}</Typography>
-                  </Fab>
-                )
-              })}
+              <Grid container alignItems='center' justify='center' className={sty.box} >
+                {p.chapter.map((p, i) => {
+                  return (
+                    <Fab key={i} variant='extended' type="submit" classes={{ label: sty.buttonLabel }} className={sty.button}>
+                      <Typography variant='subtitle1' style={{ padding: 12 }}>{p}</Typography>
+                    </Fab>
+                  )
+                })}
 
-            </Grid>
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
-      </CardComponent>
+              </Grid>
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
+        </CardComponent>
 
     )
   }) : ""
-
-  // const radius =responsive?"": { style: { borderRadius: 111 } };
+ 
   return (
     <>
       <Toolbar style={{ background: Theme.boxColor, width: '100' }} />
-      <Grid container justify='space-between' alignItems='center' style={{ padding: ' 12px 3% 3%' }}>
-
-        <Grid item container justify='space-evenly' alignItems='center'>
-        <Typography variant='h4' className={sty.heading}>gate</Typography>
-          <BookCard title='mechanical engineering' go={()=>{history.push('/qbook/mce')}}/>
-          <BookCard title ='electrical engineering'/>
-          <BookCard title ='electronics & comm engg.'/>
-          <BookCard title ='computer science engg.'/>
-          <BookCard title ='civil engineering'/>
-       
+      <Grid container justify='space-between' alignItems='center' style={{ padding: '12px 3% 3%' }}>
+        <Grid item container justify='center' alignItems='center'>
+          <Typography variant='h4' className={sty.heading}>mechanical engineering</Typography>
         </Grid>
-      </Grid>
+        {map}
 
+      </Grid>
       <Footer />
     </>
   );

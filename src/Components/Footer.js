@@ -2,12 +2,11 @@ import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import { pxToVh, pxToVw, Theme } from './../theme';
 import Typography from '@material-ui/core/Typography';
-import {Link as RouterLink} from 'react-router-dom'
-import { TextField, makeStyles, IconButton, Input, Link, Fab } from '@material-ui/core';
+import { Link as RouterLink } from 'react-router-dom'
+import { makeStyles, IconButton, Input, Link, Fab } from '@material-ui/core';
 import CardDepth from './cardDepth';
-import CardComponent from './cardEmbossed'
 import ButtonComponent from './button'
-import BigLogo from '../static/BigLogo.svg';
+import BigLogo from '../static/logo/BigLogoText.png';
 
 import FacebookIcon from '@material-ui/icons/Facebook';
 import InstagramIcon from '@material-ui/icons/Instagram';
@@ -94,17 +93,13 @@ const styles = makeStyles(t => ({
 
 		}
 	},
-	released: {
-		boxShadow: '10px 10px 14px 1px rgba(00,00,00,0.2)',
-		background: Theme.buttonColor.color2,
-		height:40 
-	},
+
 	button: {
-		paddingTop: pxToVw(51), 
+		paddingTop: pxToVw(51),
 		boxSizing: 'border-box',
-		cursor: 'pointer', 
+		cursor: 'pointer',
 		textAlign: "center",
-		
+
 	},
 	pay: {
 		paddingTop: pxToVh(60),
@@ -117,6 +112,7 @@ const styles = makeStyles(t => ({
 	released: {
 		boxShadow: `4px 4px 5px 1px rgba(00,00,00,0.2),-4px -4px 5px 1px rgba(255,255,255,0.2)`,
 		background: Theme.boxColor,
+		height: 40
 	},
 	label: {
 		color: Theme.textColor.color2,
@@ -128,16 +124,17 @@ const Footer = () => {
 	const sty = styles();
 	return (
 		<Grid container justify='center' alignItems='center' className={sty.root} >
-			<img src={BigLogo} style={{ height: 150, width: 150 }} />
+			<img src={BigLogo} alt="" style={{ height: 170, width: 150 }} />
 			{/* <Typography variant='h5'>QRIOCTY BOX</Typography> */}
-			<Typography variant='subtitle1'>Hunt for Curiosity</Typography>
-			<br />
+			<Typography variant='subtitle1' style={{padding:'12px 0',fontWeight:'bold'}}>Hunt for Curiosity</Typography>
+			
+			<Grid  alignItems='center' container style={{padding:'12px 7%',flexDirection: 'column'}}>
 			<Typography variant='h5'>GATE</Typography>
 			<br />
 			<Typography variant='body2'>
 				GATE (Graduate Aptitude Test in Engineering) is a computer based examination conducted to test the applicant in engineering & science
 				concepts in the under graduate program. This is a national level examination attempted by around 10 lakh candidates trying to
-	secure a job at PSU's and/or to get admitted to prestigious institutes for Masters. The question papers are set by IISC & IIT's each year.
+				secure a job at PSU's and/or to get admitted to prestigious institutes for Masters. The question papers are set by IISC & IIT's each year.
 	<Link color='textSecondary' component={RouterLink} to='/courses/gate'>{' '}know more</Link>
 			</Typography>
 			<br />
@@ -155,6 +152,7 @@ const Footer = () => {
 				aptitude logical reasoning and technical section which also includes interview specific core questions created by industry professionals.
 				<Link color='textSecondary' component={RouterLink} to='/courses/techgame'>{' '}know more</Link>
 			</Typography>
+			</Grid>
 			<br />
 			<Grid className={sty.social} container>
 				<Grid item className={sty.list} sm={4}>
@@ -166,8 +164,8 @@ const Footer = () => {
 				<Grid item container justify='space-evenly' alignItems='center' sm={4}>
 
 
-					<ButtonComponent style={{ height: 70, width: 70,}}>
-						<CardDepth style={{ height:  '80%', width: '80%' }}>
+					<ButtonComponent style={{ height: 70, width: 70, }}>
+						<CardDepth style={{ height: '80%', width: '80%' }}>
 							<IconButton className={sty.icon} >
 								<InstagramIcon />
 							</IconButton>
@@ -175,19 +173,19 @@ const Footer = () => {
 					</ButtonComponent>
 
 					<ButtonComponent style={{ height: 70, width: 70 }}>
-						<CardDepth style={{ height:  '80%', width:  '80%' }}>
+						<CardDepth style={{ height: '80%', width: '80%' }}>
 							<IconButton className={sty.icon}>
 								<FacebookIcon />
 							</IconButton>
 						</CardDepth>
 					</ButtonComponent>
 					<ButtonComponent
-						 style={{ height: 70, width: 70, }}>
-							<CardDepth style={{ height:  '80%', width:  '80%' }}>
-								<IconButton className={sty.icon} >
-									<LinkedInIcon />
-								</IconButton>
-							</CardDepth>
+						style={{ height: 70, width: 70, }}>
+						<CardDepth style={{ height: '80%', width: '80%' }}>
+							<IconButton className={sty.icon} >
+								<LinkedInIcon />
+							</IconButton>
+						</CardDepth>
 					</ButtonComponent>
 				</Grid>
 				<Grid item className={sty.newsletter} sm={4}>
@@ -218,22 +216,10 @@ const Footer = () => {
 							/>
 						</CardDepth>
 					</div>
-					 <div className={sty.button}
+					<div className={sty.button}
 					// onClick={imageUpload}
 					>
-						{/* <ButtonComponent
-						>
-							<Typography
-								style={{
-									// fontFamily: 'Poppins',
-									fontSize: 18,
-									padding: `5px 22px`,
-									color: Theme.textColor.color2,
-								}}>
-								Submit
-									</Typography>
-						</ButtonComponent> */}
-					<Fab variant='extended'  classes={{ label: sty.label, }} className={sty.released}>Register for free</Fab>
+						<Fab variant='extended' classes={{ label: sty.label, }} className={sty.released}>Register for free</Fab>
 					</div>
 
 				</Grid>

@@ -1,17 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { withStyles, makeStyles } from '@material-ui/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
-import Input from '@material-ui/core/Input';
-import { pxToVh, pxToVw, Theme } from './../theme';
-import Header from '../Components/Header';
+import { url } from '../config/config'
+import { pxToVh, pxToVw, Theme } from './../theme'; 
 import CardDepth from '../Components/cardDepth';
 import CardComponent from '../Components/cardEmbossed';
 import Person from '@material-ui/icons/PersonRounded';
 import { MenuItem, Checkbox, Toolbar, Fab } from '@material-ui/core';
 import Footer from '../Components/Footer'
 import Loading from '../Components/loading';
+import { toast } from 'react-toastify';
+import { useHistory } from 'react-router-dom';
+import E5 from '../Components/E5'
 
 
 const styles = makeStyles(t => ({
@@ -80,53 +82,106 @@ const data = [
         ]
     },
 ]
-
-const Course = (props) => {
+const Stream = ({ id }) => {
     const sty = styles()
+    const history = useHistory()
+    const [s, setStream] = React.useState()
+
     const styleProp = { style: { padding: '70px 20px' } }
     const stylePropSub = { style: { padding: `50px ${pxToVw(150)} ` } }
-    const listRender = data ? data.map(p => {
+    useEffect(() => {
+        axios.post(`${url}/api/getstream`,{courseValue:[id]}).then(d => {
+            // console.log(d.data);
+            if (d.data.success === true) {
+                setStream(d.data.data)
+            } if (d.data.error === true) {
+                setStream([""])
+                // toast.error(d.data.message)
+            }
+        })
+    }, [id])
+    const member = (id) => {
+        history.push(`/signup`)
+    }
+
+    const bb = s ? s.map(p => {
+        if(p==="" ){ return(
+            <p style={{color:'#fff'}}>Currently no stream available.<br/> Come back letter.</p>
+        )}else{
+        return (
+            <Grid key={p.name} item sm={6}{...stylePropSub}>
+                <CardDepth >
+                    <Grid container justify='center'>
+                        <Typography className={sty.subHeader} variant='h5'>{p.name}</Typography>
+                        <Typography className={sty.subDesc} variant='subtitle1'>{p.desc}</Typography>
+                        <Fab classes={{ label: sty.buttonLabel }} onClick={() => { member(p.name) }} className={sty.button} variant='extended'>Free Membership</Fab>
+                    </Grid>
+                </CardDepth>
+            </Grid>
+        )}
+    }) : <Loading />
+    return (
+        <>
+            {bb}
+        </>
+    )
+}
+
+
+const Course = (props) => {
+    const [course, setCourse] = React.useState()
+    const sty = styles()
+    useEffect(()=>{
+	document.title="Free Courses for GATE aspirants | Qriocty Box"
+    },[])
+    useEffect(() => {
+        axios.get(`${url}/api/course`).then(d => {
+            // console.log(d.data);
+            if (d.data.success === true) {
+                setCourse(d.data.data)
+            } if (d.data.error === true) {
+                setCourse([""])
+                // toast.error(d.data.message)
+            }
+        })
+
+    }, [])
+
+    const styleProp = { style: { padding: '70px 20px' } }
+    const stylePropSub = { style: { padding: `50px ${pxToVw(150)} ` } }
+    // console.log(course);
+
+
+
+    const listRender = course ? course.map(p => {
+        // console.log(data);
+        if(p===""){
+            return(
+                <E5/>
+            )
+        }else{
         return (
 
-            <Grid key={p.id} className={sty.root} container>
+            <Grid key={p.name} className={sty.root} container>
                 <Grid item container justify='center' xs={12}>
-                    <Typography className={sty.header} variant='h4'>{data[0].name}</Typography>
+                    <Typography className={sty.header} variant='h4'>{p.name}</Typography>
                 </Grid>
                 <Grid item container xs={12} justify='center' alignItems='center'>
                     <CardComponent >
-                        <Grid item sm={6}{...stylePropSub}>
-                            <CardDepth >
-                                <Grid container justify='center'>
-                                    <Typography className={sty.subHeader} variant='h5'>{data[0].data[0].name}</Typography>
-                                    <Typography className={sty.subDesc} variant='subtitle1'>{data[0].data[0].desc}</Typography>
-                                    <Fab classes={{ label: sty.buttonLabel }} className={sty.button} variant='extended'>Let's Practice</Fab>
-                                </Grid>
-                            </CardDepth>
-                        </Grid>
-                        <Grid item sm={6}{...stylePropSub}>
-                            <CardDepth >
-                                <Grid container justify='center'>
-                                    <Typography className={sty.subHeader} variant='h5'>{data[0].data[0].name}</Typography>
-                                    <Typography className={sty.subDesc} variant='subtitle1'>{data[0].data[0].desc}</Typography>
-                                    <Fab classes={{ label: sty.buttonLabel }} className={sty.button} variant='extended'>Let's Practice</Fab>
-                                </Grid>
-                            </CardDepth>
-                        </Grid>
-
-
+                        <Stream id={p.name} />
                     </CardComponent>
                 </Grid>
+            <Toolbar />
             </Grid>
 
 
-        )
+        )}
     }) : <Loading />
 
     return (
         <>
             <Toolbar style={{ background: Theme.boxColor }} />
             {listRender}
-            <Toolbar />
             <Footer />
 
 

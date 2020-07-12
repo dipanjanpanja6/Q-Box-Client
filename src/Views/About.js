@@ -1,16 +1,14 @@
-import React from 'react';
-import { withStyles, useTheme } from '@material-ui/styles';
+import React from 'react'; 
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import { pxToVh, pxToVw, Theme } from './../theme';
 import Footer from '../Components/Footer';
-import CardDepth from '../Components/cardDepth';
-import Header from '../Components/Header';
+import CardDepth from '../Components/cardDepth'; 
 import CardComponent from '../Components/cardEmbossed';
 import Team from '../static/Team.svg';
-import { makeStyles, Toolbar } from '@material-ui/core';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { makeStyles, Toolbar } from '@material-ui/core'; 
 import BigLogo from '../static/BigLogo.svg';
+import { useEffect } from 'react';
 
 const styles = makeStyles((t => ({
 	root: {
@@ -87,10 +85,11 @@ const styles = makeStyles((t => ({
 
 
 const About = () => {
-	const sty = styles()
-	const the = useTheme()
-	// const responsive = useMediaQuery(the.breakpoints.down('xs'));
-	// const radius =responsive?"": { style: { borderRadius: 111 } };
+	const sty = styles() 
+	useEffect(()=>{
+		document.title="About us | Qriocty Box"
+	},[])
+
 	return (
 		<div className={sty.root}>
 			<Toolbar style={{ background: Theme.boxColor }} />
@@ -225,7 +224,7 @@ problem statement.
 
 			<Grid container style={{ padding: 30 }} >
 				<CardDepth >
-<img src={BigLogo} style={{height:100,paddingTop:12,width:100}}/>
+<img alt="" src={BigLogo} style={{height:100,paddingTop:12,width:100}}/>
 					<Typography className={sty.heading} style={{ paddingBottom: 30 }}>{' - Aim'}</Typography>
 					<Grid justify='space-around' container >
 						<Grid item sm={6} className={sty.d3}>

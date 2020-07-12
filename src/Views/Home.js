@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { withStyles } from '@material-ui/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Input from '@material-ui/core/Input';
 import { pxToVh, pxToVw, Theme } from './../theme';
-import Header from '../Components/Header';
 import Footer from '../Components/Footer';
 import CardDepth from '../Components/cardDepth';
 import ButtonComponent from '../Components/button';
@@ -17,7 +16,7 @@ import SlideThreeA from '../static/success.svg';
 import SlideFourA from '../static/Press_play.svg';
 import SlideFourB from '../static/Online_shopping.svg';
 import SlideFourC from '../static/Live_collaboration.svg';
-import SlideFiveA from '../static/Documents_bro.svg'; 
+import SlideFiveA from '../static/Documents_bro.svg';
 import SlideFiveB from '../static/Reading_list.svg';
 import SlideSix from '../static/Report.svg';
 import BigLogo from '../static/logo4.svg';
@@ -30,7 +29,6 @@ const styles = makeStyles(t => ({
 		width: '100%',
 		backgroundColor: Theme.backgroundColor,
 		height: '100%',
-		// overflow: 'auto',
 	},
 	screenDivisionStyles: {
 		height: '100%',
@@ -42,19 +40,16 @@ const styles = makeStyles(t => ({
 		},
 	},
 	firstSlideParent: {
-		minHeight: 'calc(100vh - 64px)', 
-		// minHeight: pxToVh(1024), 
-		// background: Theme.boxColor,
+		minHeight: 600,
 		[t.breakpoints.down('xs')]: {
 			flexDirection: 'column-reverse',
 			height: 'auto',
-			minHeight: '100vh',
+			minHeight: 500,
 			paddingBottom: 40,
 		}
-
 	},
 	firstSlideText: {
-		minHeight: pxToVh(649),
+		minHeight: 500,
 		width: pxToVw(868),
 		alignSelf: 'center',
 		flexDirection: 'column',
@@ -76,16 +71,15 @@ const styles = makeStyles(t => ({
 		}
 	},
 	secondSlideParent: {
-		minHeight: '90vh',
+		minHeight: 600,
 	},
 	secondImg: {
-		height: pxToVh(700), width: pxToVw(700),
+		width: '100%', maxHeight: 500,
 		[t.breakpoints.down('xs')]: {
 			height: '100vw',
 			width: '75vw',
 		}
 	},
-
 	baseStyle: {
 		paddingLeft: pxToVw(20),
 	},
@@ -105,11 +99,11 @@ const styles = makeStyles(t => ({
 		},
 	},
 	thirdSlideParent: {
-		minHeight: '90vh',
+		// minHeight: '90vh',
 		width: '100%',
 		display: 'flex',
-		[t.breakpoints.down('xs')]:{
-			flexDirection:'column-reverse'
+		[t.breakpoints.down('xs')]: {
+			flexDirection: 'column-reverse'
 		}
 	},
 	thirdText: {
@@ -122,23 +116,22 @@ const styles = makeStyles(t => ({
 		}
 	},
 	fourthSlideParent: {
-		// minHeight: '100vh',
-		padding: `${pxToVh(120)} ${pxToVw(47)} ${pxToVh(73)} ${pxToVw(70)}`,
+		padding: `50px ${pxToVw(47)}`,
 	},
 	fifthSlideParent: {
 		padding: 25,
 		[t.breakpoints.down('xs')]:
-		{flexDirection:'column-reverse'}
+			{ flexDirection: 'column-reverse' }
 	},
 	fifthSlideParent2: {
 		padding: 25, flexDirection: ' row-reverse',
 		[t.breakpoints.down('xs')]:
-		{flexDirection:'column-reverse'}
+			{ flexDirection: 'column-reverse' }
 	},
 	sixthSlideParent: {
 		height: pxToVh(1050),
 		width: '100%',
-		padding: `${pxToVh(125)} ${pxToVw(58)} 0 ${pxToVw(59)}`,
+		padding: `100px ${pxToVw(47)}`,
 		boxSizing: 'border-box',
 	},
 	released: {
@@ -167,11 +160,11 @@ inset -3px -4px 7px white`,
 		fontFamily: 'Poppins',
 		fontWeight: 600,
 		textAlign: 'center',
-		paddingLeft: 25, 
+		paddingLeft: 25,
 		[t.breakpoints.down('xs')]: {
-			
-			padding:'30px 10% 0',
-		
+
+			padding: '30px 10% 0',
+
 			fontSize: 20,
 
 		}
@@ -179,25 +172,25 @@ inset -3px -4px 7px white`,
 	heading2: {
 		color: Theme.textColor.color1,
 		letterSpacing: pxToVw(0.9),
-		lineHeight: 1.5, 
+		lineHeight: 1.5,
 		textAlign: 'center',
 		paddingLeft: 25,
 		[t.breakpoints.down('xs')]: {
-			padding:"30px 5%",
-			fontSize:15,
-			paddingBottom: 30, 
+			padding: "30px 5%",
+			fontSize: 15,
+			paddingBottom: 30,
 
 		}
 	},
 	firstImg: {
-		height: '70vh', width: pxToVw(757), 
+		width: '100%', maxHeight: 500,
 		[t.breakpoints.down('xs')]: {
 			height: 'auto',
 			width: '70vw',
 		}
 	},
 	thirdImg: {
-		height: pxToVh(770), width: pxToVw(770),
+		width: '100%', maxHeight: 500,
 		[t.breakpoints.down('xs')]: {
 			height: '50vh',
 			width: '75vw',
@@ -210,14 +203,24 @@ inset -3px -4px 7px white`,
 			width: '100%',
 			padding: '20px 0'
 		}
+	},
+	successText: {
+		color: Theme.textColor.heading,
+		fontWeight: 'bold',
+		textAlign: 'center',
+		paddingBottom: 90,
+		[t.breakpoints.down('xs')]:{
+			paddingTop: 90,
+			paddingBottom: 0,
+		}
 	}
 }))
 
 
 
 const firstSlide = (classes, register) => {
-	return (<div style={{background:Theme.boxColor}}>
-<Toolbar/>
+	return (<div style={{ background: Theme.boxColor }}>
+		<Toolbar />
 		<Grid container justify='center' alignItems='center' className={classes.firstSlideParent}>
 			<Grid item sm={7} xs={12} container justify='center' className={classes.firstSlideText}
 				container spacing={2}
@@ -253,7 +256,7 @@ const firstSlide = (classes, register) => {
 					container
 					justify="center"
 					style={{
-						height: pxToVh(94),
+						// height: pxToVh(94),
 						width: '100%',
 						alignSelf: 'flex-end',
 					}}>
@@ -265,12 +268,13 @@ const firstSlide = (classes, register) => {
 				justify="center"
 				alignItems="center"
 				style={{
-					height: '100%',
+					height: '100%', padding: '5%'
 				}}>
 				<img className={classes.firstImg}
 					src={SlideOne}
 					alt=""
 				/>
+
 			</Grid>
 		</Grid></div>
 	);
@@ -279,7 +283,7 @@ const secondSlide = (classes) => {
 	return (
 		<Grid container justify="center"
 			alignItems="center" className={classes.secondSlideParent}>
-			<Grid item sm={5}
+			<Grid item sm={5} style={{ padding: '4%' }}
 				container
 				alignItems="center"
 				justify="center"
@@ -331,7 +335,7 @@ const thirdSlide = (classes) => {
 						justify='space-around'
 						container
 						alignItems='center'
-						style={{ minHeight: '90vh', flexDirection: 'column', color: '#fff', padding: ' 0 7vw', textAlign: 'center' }}>
+						style={{ minHeight: 600, flexDirection: 'column', color: '#fff', padding: ' 0 7vw', textAlign: 'center' }}>
 						<Typography variant='h6'>
 							STEP 1
 								</Typography>
@@ -368,7 +372,7 @@ const thirdSlide = (classes) => {
 
 
 			</Grid>
-			<Grid item sm={6} container alignItems="center" justify="center">
+			<Grid item sm={6} container style={{ padding: '4%' }} alignItems="center" justify="center">
 				<img src={SlideThreeA} className={classes.thirdImg} alt="" />
 			</Grid>
 		</Grid>
@@ -397,7 +401,7 @@ const fourthSlide = (classes) => {
 	const fourMap = fourthData ? fourthData.map((p, i) => {
 		return (
 			<div key={i} className={classes.fourthCard} >
-				<CardComponent style={{ background: '#fff', padding: '50px 0' }}
+				<CardComponent style={{ padding: '50px 0' }}
 					children={
 						<Grid
 							container
@@ -410,8 +414,6 @@ const fourthSlide = (classes) => {
 							}}>
 							<Typography variant='h6'
 								style={{
-									// color: Theme.textColor.color1,
-									// fontSize: pxToVw(30),
 									fontWeight: 'bold',
 									padding: '12px 10%'
 								}}>
@@ -419,44 +421,41 @@ const fourthSlide = (classes) => {
 							</Typography>
 							<Typography
 								style={{
-									// color: Theme.textColor.color1,
-									// fontSize: pxToVw(20),
-									// fontFamily: 'Poppins',
 									fontWeight: 'light',
 								}}>{p.desc}
 							</Typography>
-							<img
-								src={p.img}
-								style={{
-									width: '100%',
-									// width: pxToVw(368.47),
-								}}
-								alt=""
-							/>
+							<div style={{ padding: '4%' }}>
+
+								<img
+									src={p.img}
+									style={{
+										width: '100%', maxHeight: 500,
+									}}
+									alt=""
+								/>
+							</div>
 						</Grid>
 					}
 				/>
 			</div>
-
 		)
 	}) : ''
 	return (
-		<Grid container className={classes.fourthSlideParent}>
-			<CardComponent>
-				<Grid
-					container
-					alignItems="center"
-					justify="space-evenly"
-					className={classes.scrollStyles}
-					style={{
-						color: Theme.textColor.heading,
-						height: '100%',
-						width: '95%', padding: '50px 0', lineHeight: '2 !important'
-					}}>
-					{fourMap}
-
-				</Grid>
-			</CardComponent>
+		<Grid container justify='center' className={classes.fourthSlideParent}>
+			{/* <CardComponent> */}
+			<Grid
+				container
+				alignItems="center"
+				justify='space-between'
+				className={classes.scrollStyles}
+				style={{
+					color: '#fff',
+					height: '100%',
+					width: '95%', padding: '50px 0', lineHeight: '2 !important'
+				}}>
+				{fourMap}
+			</Grid>
+			{/* </CardComponent> */}
 
 		</Grid>
 	);
@@ -465,7 +464,7 @@ const fifthSlide = (classes, register) => {
 	return (
 		<>
 			<Grid style={{
-				padding: `${pxToVh(120)} ${pxToVw(47)} ${pxToVh(73)} ${pxToVw(70)}`,
+				padding: `70px ${pxToVw(47)}`,
 			}}>
 				<CardComponent>
 					<Grid container alignItems="center" justify="center" className={classes.fifthSlideParent}  >
@@ -505,10 +504,10 @@ const fifthSlide = (classes, register) => {
 								Getting Curious ?</Fab>
 
 						</Grid>
-						<Grid item sm={5}>
+						<Grid item sm={5} style={{ padding: '4%' }}>
 							<img
 								src={SlideFiveA}
-								style={{ height: pxToVh(587.47), width: '100%', maxWidth: '70vw' }}
+								style={{ maxHeight: 500, width: '100%', }}
 								alt=""
 							/>
 						</Grid>
@@ -517,7 +516,7 @@ const fifthSlide = (classes, register) => {
 			</Grid>
 
 			<Grid style={{
-				padding: `${pxToVh(120)} ${pxToVw(47)} ${pxToVh(73)} ${pxToVw(70)}`,
+				padding: `70px ${pxToVw(47)}`,
 			}}>
 				<CardComponent>
 					<Grid container alignItems="center" justify="center" className={classes.fifthSlideParent2} >
@@ -555,10 +554,10 @@ const fifthSlide = (classes, register) => {
 								Explore topics</Fab>
 
 						</Grid>
-						<Grid item sm={5}>
+						<Grid item sm={5} style={{ padding: '4%' }}>
 							<img
 								src={SlideFiveB}
-								style={{ height: pxToVh(587.47), width: '100%', maxWidth: '70vw' }}
+								style={{ maxHeight: 500, width: '100%' }}
 								alt=""
 							/>
 						</Grid>
@@ -567,7 +566,7 @@ const fifthSlide = (classes, register) => {
 			</Grid>
 
 			<Grid style={{
-				padding: `${pxToVh(120)} ${pxToVw(47)} ${pxToVh(73)} ${pxToVw(70)}`,
+				padding: `70px ${pxToVw(47)} 140px`,
 			}}>
 				<CardComponent>
 					<Grid container alignItems="center" justify="center" className={classes.fifthSlideParent} >
@@ -605,10 +604,10 @@ const fifthSlide = (classes, register) => {
 								Register for Seminar</Fab>
 
 						</Grid>
-						<Grid item sm={6}>
+						<Grid item sm={6} style={{ padding: '4%' }}>
 							<img
 								src={SlideSix}
-								style={{ height: pxToVh(587.47), width: '100%', maxWidth: '70vw' }}
+								style={{ maxHeight: 500, width: '100%', }}
 								alt=""
 							/>
 						</Grid>
@@ -720,14 +719,8 @@ const successText = (classes) => {
 			container
 			alignItems="center"
 			justify="center"
-			style={{ minHeight: '20vh', width: '100%' }}>
-			<Typography variant='h4'
-				style={{
-					color: Theme.textColor.heading,
-					fontWeight: 'bold',
-					textAlign:'center',
-					// fontSize: pxToVw(50),
-				}}>
+			style={{ width: '100%' }}>
+			<Typography variant='h4' className={classes.successText} >
 				WAY TO SUCCESS
 				</Typography>
 		</Grid>
@@ -738,7 +731,10 @@ const successText = (classes) => {
 const Home = () => {
 	const history = useHistory()
 	const [state, setState] = React.useState({ buttonState: true })
+	useEffect(() => {
+		document.title = "India's 1st practicing platform for competitive exams | Qriocty Box"
 
+	}, [])
 	const register = () => { history.push('/signup') }
 
 	const classes = styles()
@@ -749,15 +745,14 @@ const Home = () => {
 		thirdSlide(classes),
 		fourthSlide(classes),
 		fifthSlide(classes),
-		// sixthSlide(classes),
-		footer(classes),
 	];
 	return (
 		<div className={`${classes.root} ${classes.scrollStyles}`}>
-			
+
 			{screenDivisions.map((value, index) => (
 				<div key={index}>{value}</div>
 			))}
+			<Footer />
 		</div>
 	);
 }

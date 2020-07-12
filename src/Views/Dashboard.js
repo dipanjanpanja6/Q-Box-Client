@@ -3,15 +3,21 @@ import { withStyles } from '@material-ui/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Input from '@material-ui/core/Input';
-import { pxToVh, pxToVw, Theme } from './../theme';
-import Header from '../Components/Header';
+import { pxToVh, pxToVw, Theme } from './../theme'; 
 import CardDepth from '../Components/cardDepth';
 import LoginImg from '../static/login.svg';
 import CardComponent from '../Components/cardEmbossed';
 import Person from '@material-ui/icons/PersonRounded';
-import { Toolbar } from '@material-ui/core';
+import { Toolbar, makeStyles } from '@material-ui/core';
+import Loading from '../Components/loading';
+import { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { checkUser } from '../redux/actions/student'
+import PropType from 'prop-types'
+import { useHistory } from 'react-router-dom';
 
-const styles = () => ({
+
+const styles =makeStyles (t=> ({
 	root: {
 		height: '100vh',
 		width: '100vw',
@@ -40,7 +46,7 @@ const styles = () => ({
 		boxShadow: '10px 10px 14px 1px rgba(00,00,00,0.2)',
 		background: Theme.boxColor,
 	},
-});
+}))
 
 const MyProfile = (props) => {
 	const { classes } = props;
@@ -167,12 +173,35 @@ const MyProfile = (props) => {
 
 const Player = (props) => {
 	const { classes } = props;
+	return(<><Toolbar style={{background:Theme.boxColor}} /><Loading/></>)
 };
 
 const Dashboard = (props) => {
-	const { classes } = props;
-	const [switchState, setSwitchState] = useState(0);
+	const  classes  = styles()
+	const history=useHistory()
+	const [switchState, setSwitchState] = useState(1);
+	useEffect(()=>{props.checkUser()},[])
+	useEffect(()=>{
+		if(props.auth===true){
+            setSwitchState(0)
+        }
+        if(props.auth===false){
+            window.location='/login'
+        }
+        if(props.auth===null){
+			setSwitchState(1)
+        }
+	},[props.auth])
 	return switchState == 0 ? <MyProfile classes={classes} /> : <Player />;
 };
-
-export default withStyles(styles)(Dashboard);
+Dashboard.prototype = {
+    auth: PropType.object.isRequired, 
+    checkUser: PropType.func.isRequired,  
+}
+const mapToProp = {
+    checkUser
+}
+const mapToState = (state) => ({
+    auth: state.admin.auth
+})
+export default connect(mapToState,mapToProp) (Dashboard);

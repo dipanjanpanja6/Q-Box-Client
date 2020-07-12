@@ -3,8 +3,8 @@ import { LOGIN, AUTH, ACTIVATE } from '../type'
 import { toast } from 'react-toastify'
 
 export const login = (data) => (dispatch) => {
-        
-fetch(`${url}/api/login`,{
+
+    fetch(`${url}/api/login`, {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-type': 'Application/json' },
@@ -12,6 +12,11 @@ fetch(`${url}/api/login`,{
     }).then(res => {
         res.json().then(d => {
             console.log(d);
+            if(d.success===true){
+            dispatch({
+                type: AUTH,
+                payload: true
+            })}
             dispatch({
                 type: LOGIN,
                 payload: d
@@ -19,7 +24,7 @@ fetch(`${url}/api/login`,{
 
         })
     }).catch(r => {
-        console.log(r); 
+        console.log(r);
         toast.error('Something went wrong ! Try again')
     })
 }
@@ -59,6 +64,11 @@ export const signUp = (data) => (dispatch) => {
     }).then(res => {
         res.json().then(d => {
             // console.log(d);
+            if(d.success===true){
+                dispatch({
+                    type: AUTH,
+                    payload: true
+                })}
             dispatch({
                 type: LOGIN,
                 payload: d
@@ -98,7 +108,7 @@ export const activate = (data) => (dispatch) => {
     })
 }
 export const checkUser = () => (dispatch) => {
-    fetch(`${url}/checkUser`, {
+    fetch(`${url}/api/checkUser`, {
         method: 'POST',
         credentials: 'include',
     }).then(res => {
@@ -111,7 +121,7 @@ export const checkUser = () => (dispatch) => {
                 })
             } else if (d.error === true) {
                 console.log(d.message);
-                d.message == 'app/network-error' && toast.error('server offline ! please contact team')
+                d.message === 'app/network-error' && toast.error('server offline ! please contact team')
                 dispatch({
                     type: AUTH,
                     payload: false
@@ -120,21 +130,25 @@ export const checkUser = () => (dispatch) => {
             }
         }).catch(r => {
             console.log(r);
-            toast.error('Something went wrong ! Try again')
+            // console.log('Something went wrong ! Try again')
         })
     })
 }
 export const logout = () => (dispatch) => {
-    fetch(`${url}/logout`, {
+    fetch(`${url}/api/logout`, {
         method: 'POST',
         credentials: 'include',
     }).then(res => {
         res.json().then(d => {
             // console.log(d);
-            dispatch({
-                type: AUTH,
-                payload: false
-            })
+            if(d.success===true){
+
+                dispatch({ 
+                    type: AUTH,
+                    payload: false
+                })
+                window.location = '/login'
+            }
         }).catch(r => console.log(r))
     })
 }

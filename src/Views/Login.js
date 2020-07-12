@@ -4,8 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
 import Input from '@material-ui/core/Input';
-import { pxToVh, pxToVw, Theme } from './../theme';
-import Header from '../Components/Header';
+import { pxToVh, pxToVw, Theme } from './../theme'; 
 import CardDepth from '../Components/cardDepth';
 import ButtonComponent from '../Components/button';
 import LoginImg from '../static/login.svg';
@@ -121,11 +120,10 @@ const LoginPage = (props) => {
         document.title = 'Login | Qriocty Box'
     }, [])
 
-    useEffect(() => {
-        console.log(props);
+    useEffect(() => { 
         if (props.auth) {
             setLoading(false)
-            if (props.auth.success) {
+            if (props.auth.success==true) {
                 history.push('/dashboard')
             } else if (props.auth.error) {
                 toast.error(props.auth.message)
@@ -226,9 +224,9 @@ const LoginPage = (props) => {
 							<Fab variant='extended' type='submit'  classes={{ label: sty.buttonLabel }} className={sty.button}>Login{loading && <CircularProgress/>}</Fab>
 
 </form>
-							<Typography variant='body2' style={{ color: '#fff', padding: '0 12px 12px' }} >OR</Typography>
+							{/* <Typography variant='body2' style={{ color: '#fff', padding: '0 12px 12px' }} >OR</Typography> */}
 
-							<Fab variant='extended' classes={{ label: sty.buttonLabel }} className={sty.button}>Use Google</Fab>
+							{/* <Fab variant='extended' classes={{ label: sty.buttonLabel }} className={sty.button}>Use Google</Fab> */}
 							<Link to='/signup' component={RouterLink} color='inherit'>New User! Create account here.</Link>
 							<Link to='/forgetpass' component={RouterLink} color='inherit'>Forget Password</Link>
 						</CardComponent>

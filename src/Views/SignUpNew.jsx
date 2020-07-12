@@ -1,14 +1,9 @@
-import React, { useState } from 'react';
-import { withStyles } from '@material-ui/styles';
-import Typography from '@material-ui/core/Typography';
+import React, { useState } from 'react'; 
 import Grid from '@material-ui/core/Grid';
 import axios from 'axios';
 import Input from '@material-ui/core/Input';
-import { pxToVh, pxToVw, Theme } from './../theme';
-import Header from '../Components/Header';
-import CardDepth from '../Components/cardDepth';
-import ButtonComponent from '../Components/button';
-import LoginImg from '../static/login.svg';
+import {  pxToVw, Theme } from './../theme'; 
+import CardDepth from '../Components/cardDepth'; 
 import CardComponent from '../Components/cardEmbossed';
 import Person from '@material-ui/icons/PersonRounded';
 import SignUp from '../static/Mobile login-pana.svg';
@@ -20,7 +15,7 @@ import { toast } from 'react-toastify'
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { connect } from 'react-redux';
 import { signUp } from '../redux/actions/student'
-import PropType from 'prop-types'
+import PropType from 'prop-types' 
 
 
 
@@ -107,10 +102,6 @@ const styles = makeStyles(t => ({
         }
     },
     inputArea: {
-        // height: `30%`,
-        // width: '100%',
-        // display: 'flex',
-        // flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'space-around'
     },
@@ -136,29 +127,36 @@ const styles = makeStyles(t => ({
     }
 }))
 
-const logInUser = (props) => {
-    const reqParams = {
-        "userName": "username",
-        "fkUserRoleId": 3,
-        "userEmailId": "user@user.com",
-        "userPassword": "password",
-        "userPhoneNumber": "9900990099"
-    };
-
-    axios
-        .post(`http://208.109.12.146:8089/api/signup`, reqParams)
-        .then((res) => {
-            alert("Logged In")
-            console.log(res);
-            console.log(res.data);
-        })
-        .catch((error) => alert('Log In Api Error'));
-};
 
 const SignUpS = (props) => {
-    const [state, setState] = React.useState({fkUserRoleId:3, userName: '', userEmail: '', conPass: '', ph: '', password: '', pass: '' })
+    const [state, setState] = React.useState({ fkUserRoleId: 3, userName: '', userEmail: '', conPass: '', ph: '', password: '', pass: '' })
+    const [ok, setOk] = React.useState(false) 
+
     const handleChange = e => {
-        setState({...state, [e.target.id]: e.target.value })
+
+        setState({ ...state, [e.target.id]: e.target.value })
+    }
+    const checkPass = () => {
+        if (state.conPass !== state.pass) {
+            toast.warn('Password does not match')
+        } else if (state.pass === '') {
+            toast.warn('Type a password first')
+
+        } else if (state.pass.length < 6) {
+            toast.error('Use minimum six letter Password')
+        } else {
+            setOk(true)
+        }
+    }
+    const checkPh = () => {
+
+        if (!state.ph.match(/^\d{10}$/)) {
+            toast.warn('Enter correct phone number')
+        } else if (parseInt(state.ph) < 4000000000) {
+            toast.warn('Enter valid phone number')
+        } else {
+            setOk(true)
+        }
     }
     const sty = styles()
     const [loading, setLoading] = React.useState(false)
@@ -173,7 +171,7 @@ const SignUpS = (props) => {
         console.log(props);
         if (props.auth) {
             setLoading(false)
-            if (props.auth.success) {
+            if (props.auth.success===true) {
                 history.push('/dashboard')
             } else if (props.auth.error) {
                 toast.error(props.auth.message)
@@ -181,16 +179,18 @@ const SignUpS = (props) => {
 
             }
         }
-    }, [props])
+    }, [props,history])
 
     const SignUpUser = (e) => {
         e.preventDefault()
-        const reqParams = {
-            userEmailId: state.userEmail,
-            userPassword: state.password,
-        };
-        props.signUp(state)
-        setLoading(true)
+       if(ok===true){
+           props.signUp(state)
+           setLoading(true)
+       }else{
+           toast.error('Enter valid information')
+       }
+
+        console.log(state);
     }
 
     return (
@@ -263,6 +263,7 @@ const SignUpS = (props) => {
                                                 onChange={handleChange}
                                                 fullWidth
                                                 required
+
                                                 type='email'
                                                 placeholder="E-mail"
                                                 classes={{ input: sty.input }}></Input>
@@ -278,7 +279,6 @@ const SignUpS = (props) => {
                                                 fullWidth
                                                 required
                                                 type='password'
-                                                
                                                 placeholder="Password"
                                                 classes={{ input: sty.input }}></Input>
                                         </CardDepth>
@@ -286,6 +286,7 @@ const SignUpS = (props) => {
                                     <Grid container justify='center' className={sty.logInput}>
                                         <CardDepth>
                                             <Input
+                                                onBlur={checkPass}
                                                 id="conPass"
                                                 value={state.conPass}
                                                 disableUnderline
@@ -301,6 +302,7 @@ const SignUpS = (props) => {
                                             <Input
                                                 id="ph"
                                                 value={state.ph}
+                                                onBlur={checkPh}
                                                 disableUnderline
                                                 onChange={handleChange}
                                                 fullWidth
@@ -336,12 +338,12 @@ const SignUpS = (props) => {
 
                                     <Grid className={sty.res} justify='center' alignItems='center' container>
 
-                                        <Fab variant='extended' type='submit' classes={{ label: sty.buttonLabel }} className={sty.button}>Sign Up</Fab>
+                                        <Fab variant='extended' type='submit' classes={{ label: sty.buttonLabel }} className={sty.button}>Sign Up {loading && <CircularProgress/>}</Fab>
 
 
-                                        <Typography variant='body2' style={{ color: '#fff', padding: '0 12px 12px' }} >OR</Typography>
+                                        {/* <Typography variant='body2' style={{ color: '#fff', padding: '0 12px 12px' }} >OR</Typography> */}
 
-                                        <Fab variant='extended' classes={{ label: sty.buttonLabel }} className={sty.button}>Use Google</Fab>
+                                        {/* <Fab variant='extended' classes={{ label: sty.buttonLabel }} className={sty.button}>Use Google</Fab> */}
                                     </Grid>
                                     <Link to='/login' color='inherit' component={RouterLink} >Existing user! Login here</Link>
                                 </Grid>

@@ -2,6 +2,11 @@
   "name": "q-box",
   "version": "0.1.0",
   "private": true,
+  "description": "Qriocty Box Education Service",
+  "main": "index.js",
+  "keywords": [],
+  "author": "Dipanjan Panja",
+  "license": "ISC",
   "dependencies": {
     "@material-ui/core": "^4.9.11",
     "@material-ui/icons": "^4.9.1",
@@ -10,24 +15,20 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
+    "@videojs/themes": "^1.0.0",
     "axios": "^0.19.2",
-    "css-loader": "^3.5.2",
-    "file-loader": "^6.0.0",
-    "jodit": "^3.3.24",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.4.1",
+    "react-scripts": "^3.4.1",
     "react-toastify": "^6.0.5",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "style-loader": "^1.1.4"
+    "video.js": "^7.8.2",
+    "videojs-contrib-eme": "^3.7.0"
   },
   "scripts": {
-    "webpack-dev-server": "webpack-dev-server",
-    "dev": "webpack-dev-server --mode=development",
-    "prod": "webpack --mode=production",
     "start": "set PORT=80 && react-scripts start",
     "build": "react-scripts build"
   },
@@ -46,22 +47,7 @@
       "last 1 safari version"
     ]
   },
-  "description": "Qriocty Box Education Service",
-  "main": "index.js",
   "devDependencies": {
-    "@babel/core": "^7.9.0",
-    "@babel/plugin-proposal-class-properties": "^7.8.3",
-    "@babel/preset-env": "^7.9.5",
-    "@babel/preset-react": "^7.9.4",
-    "babel-loader": "^8.1.0",
-    "html-webpack-plugin": "^4.2.0",
-    "path": "^0.12.7",
-    "webpack": "4.42.0",
-    "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.10.3",
     "redux-devtools-extension": "^2.13.8"
-  },
-  "keywords": [],
-  "author": "Dipanjan Panja",
-  "license": "ISC"
+  }
 }

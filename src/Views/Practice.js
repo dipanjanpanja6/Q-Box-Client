@@ -1,57 +1,147 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { withStyles } from '@material-ui/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import { pxToVh, pxToVw, Theme } from './../theme';
-import Header from '../Components/Header';
+import { pxToVh, pxToVw, Theme } from './../theme'; 
 import Checkbox from '@material-ui/core/Checkbox';
 import CardDepth from '../Components/cardDepth';
 import CardComponent from '../Components/cardEmbossed';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Toolbar } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { Toolbar, Fab, makeStyles } from '@material-ui/core';
 
-const style = (theme) => ({
-	root: {
-		height: '100vh',
-		background: Theme.boxColor,
-	},
+import Videojs from '../Components/videoPlayer';
+
+const videoJsOptions = {
+	autoplay: false,
+	playbackRates: [0.3, 0.5, 1, 1.25, 1.5, 2, 2.5],
+	width: 720,
+	height: 300,
+	controls: true,
+	fluid: true,
+
+	cacheEncryptionKeys:true,
+	//   aspectRatio: '1:1',
+	sources: [
+		{
+			src:'https://s3.ap-south-1.amazonaws.com/veido.thumbnail/spw/test.m3u8',
+			// src: require('./cc.mkv'),
+			// type: 'video/mp4',
+			type:"application/x-mpegURL"
+		},
+	],
+	html5: {
+		vhs: {
+		  withCredentials: true
+		}
+	  }
+	// poster: require('../static/400.svg')
+
+};
+
+// import videoJs from 'video.js'
+// import 'video.js/dist/video-js.min.css'; 
+// import 'video.js/dist/video-js.css';
+
+// City
+// import '@videojs/themes/dist/city/index.css';
+
+// Fantasy
+// import '@videojs/themes/dist/fantasy/index.css';
+
+// Forest
+// import '@videojs/themes/dist/forest/index.css';
+
+// Sea
+// import '@videojs/themes/dist/sea/index.css'; 
+
+const style = makeStyles(t => ({
+
 	content: {
 		width: '100%',
-		height: pxToVh(1080 - 99),
-		backgroundColor: 'white',
-		display: 'flex',
+		// minHeight:'100vh',
+		// backgroundColor: 'white',
 		alignItems: 'center',
 		justifyContent: 'center',
+		padding: 30,
+		[t.breakpoints.down('xs')]: {
+			padding: 12
+		}
 	},
 	checkbox: {
 		color: 'white',
 	},
-	released: {
-		boxShadow: '10px 10px 14px 1px rgba(00,00,00,0.2)',
-		background: Theme.buttonColor.color1,
+	button: {
+		background: Theme.boxColor,
+		marginBottom: 12,
+		width: 150,
+		boxShadow: `4px 4px 5px 1px rgba(00,00,00,0.2),-4px -4px 5px 1px rgba(255,255,255,0.2)`,
+		[t.breakpoints.down('xs')]: {
+			width: '90%'
+		}
 	},
-});
+	buttonLabel: {
+		color: '#fff',
+		textTransform: 'uppercase',
+	},
+	vedio: {
+		boxShadow: `4px 4px 5px 1px rgba(00,00,00,0.2),-4px -4px 5px 1px rgba(255,255,255,0.2)`,
+		borderRadius: pxToVh(80),
+		border: 'solid 7px blueviolet',
+		overflow: 'hidden',
+		[t.breakpoints.down('xs')]: {
+			borderRadius: pxToVh(60),
 
-class Practice extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			question:'',
-			correctOption: 0,
-			selectedOption: 0,
-			option1: '',
-			option2: '',
-			option3: '',
-			option4: '',
-			option5: '',
-			id: 1,
-		};
+		}
+	},
+	options: {
+		[t.breakpoints.down('xs')]: {
+			flexDirection: 'column-reverse'
 
-		this.fetchQuestions(1);
+		}
+	},
+	checkboxCon: {
+		height: '20%',
+		width: '100%',
+		display: 'flex',
+		paddingLeft: '13%',
+		boxSizing: 'border-box',
+		alignItems: 'center',
+		justifyContent: 'start',
+		[t.breakpoints.down('xs')]: {
+			paddingLeft: 12,
+
+		}
+	},
+	question: {
+		minHeight: '40%',
+		width: '100%',
+		alignItems: 'center',
+		padding: '5% 5% 12px',
+		[t.breakpoints.down('xs')]: {
+			paddingBottom: 12,
+			paddingLeft: '8%',
+		}
 	}
+}))
 
-	fetchQuestions = (id) => {
+const Practice = (props) => {
+
+
+	const [state, setState] = React.useState({
+		question: 'what is what is what is what is what is what is what is what is what is what is what is what is what is what is ',
+		correctOption: 0,
+		selectedOption: 0,
+		option1: 'what is what is ',
+		option2: 'what is cvhjkjkjkhjhgfgfghjhkjl hjl jhjh ghjkl kjh ghgjh kjl jhg gjhkjlk kjhfg hgjh ',
+		option3: 'what is what is what is what is what is ',
+		option4: 'hvjhvj',
+		option5: 'cvghjk',
+		id: 1,
+	})
+
+	const fetchQuestions = (id) => {
 		// const data = {
 		// 	questionId: 1,
 		// 	question:
@@ -74,7 +164,7 @@ class Practice extends React.Component {
 			axios
 				.get(`http://localhost:8089/api/question?id=${id}`)
 				.then((res) => {
-					this.setState({
+					setState({
 						question: res.data.question,
 						correctOption: res.correctOption,
 						option1: res.data.option1,
@@ -87,168 +177,74 @@ class Practice extends React.Component {
 				})
 				.catch((error) => console.log('Sign In Api Error', error));
 	};
+	const [loading, setLoading] = React.useState(false)
 
-	render() {
-		const { classes } = this.props;
-		const option = [
-			this.state.option1,
-			this.state.option2,
-			this.state.option3,
-			this.state.option4,
-			this.state.option5,
-		];
-		return (
-			<div className={classes.root}>
-				<Toolbar />
-				<div className={classes.content}>
-					<div style={{ height: '90%', width: '90%' }}>
-						<CardComponent
-							children={
-								<div
-									style={{ height: '100%', width: '100%', display: 'block' }}>
-									<div
-										style={{
-											height: '40%',
-											width: '100%',
-											display: 'flex',
-											alignItems: 'center',
-											justifyContent: 'center',
-											padding: '10%',
-											boxSizing: 'border-box',
-										}}>
-										<Typography
-											style={{
-												fontFamily: 'Poppins',
-												color: 'white',
-												letterSpacing: pxToVw(1.7),
-												fontSize: Theme.fontSize.size4,
-											}}>
-											{this.state.question}
-										</Typography>
-									</div>
-									<div
-										style={{
-											height: '40%',
-											width: '100%',
-											display: 'block',
-										}}>
-										{option.map(
-											(value, index) =>
-												value != null && (
-													<div
-														style={{
-															height: '20%',
-															width: '100%',
-															display: 'flex',
-															paddingLeft: '13%',
-															boxSizing: 'border-box',
-															alignItems: 'center',
-															justifyContent: 'start',
-														}}>
-														<Checkbox
-															classes={{
-																root: classes.checkbox,
-															}}
-															style={{ color: 'white' }}
-														/>
-														<Typography
-															style={{
-																marginLeft: '1%',
-																fontFamily: 'Poppins',
-																fontSize: Theme.fontSize.size4,
-																color: 'white',
-															}}>
-															{value}
-														</Typography>
-													</div>
-												)
-										)}
-									</div>
-									<div
-										style={{
-											height: '10%',
-											width: '100%',
-											display: 'flex',
-											alignItems: 'center',
-											justifyContent: 'space-around',
-											paddingLeft: '15%',
-											paddingRight: '15%',
-											boxSizing: 'border-box',
-										}}>
-										<div
-											style={{
-												height: pxToVh(60),
-												width: pxToVw(200),
-												boxSizing: 'border-box',
-												cursor: 'pointer',
-											}}
-											onClick={() => this.fetchQuestions(this.state.id - 1)}>
-											<CardComponent
+	const classes = style()
+	const option = [
+		state.option1,
+		state.option2,
+		state.option3,
+		state.option4,
+		state.option5,
+	];
+	return (
+		<>
+			<Toolbar style={{ background: Theme.boxColor }} />
+			<Grid container className={classes.content}>
+
+				<CardComponent >
+					<Grid container className={classes.question} >
+						<Typography variant='body1' style={{ color: 'white', }}>
+							{state.question}
+						</Typography>
+					</Grid>
+
+					<Grid container className={classes.options} alignItems='center' justify='space-between'>
+						<Grid container item sm={6}
+							style={{
+								height: '40%',
+
+							}}>
+							{option.map(
+								(value, index) =>
+									value != null && (
+										<div key={index} className={classes.checkboxCon} >
+											<Checkbox
 												classes={{
-													root: classes.released,
+													root: classes.checkbox,
+												}}
+												style={{ color: 'white' }}
+											/>
+											<Typography variant='body1'
+												style={{
+													marginLeft: '1%',
+													color: 'white',
 												}}>
-												<Typography
-													style={{
-														fontFamily: 'Poppins',
-														fontSize: Theme.fontSize.size4,
-														color: Theme.textColor.color2,
-													}}>
-													Previous
-												</Typography>
-											</CardComponent>
+												{value}
+											</Typography>
 										</div>
-										<div
-											style={{
-												height: pxToVh(60),
-												width: pxToVw(200),
-												boxSizing: 'border-box',
-												cursor: 'pointer',
-											}}>
-											<CardComponent
-												classes={{
-													root: classes.released,
-												}}>
-												<Typography
-													style={{
-														fontFamily: 'Poppins',
-														fontSize: Theme.fontSize.size4,
-														color: Theme.textColor.color2,
-													}}>
-													Save & Next
-												</Typography>
-											</CardComponent>
-										</div>
-										<div
-											style={{
-												height: pxToVh(60),
-												width: pxToVw(200),
-												boxSizing: 'border-box',
-												cursor: 'pointer',
-											}}
-											onClick={() => this.fetchQuestions(this.state.id + 1)}>
-											<CardComponent
-												classes={{
-													root: classes.released,
-												}}>
-												<Typography
-													style={{
-														fontFamily: 'Poppins',
-														fontSize: Theme.fontSize.size4,
-														color: Theme.textColor.color2,
-													}}>
-													Next
-												</Typography>
-											</CardComponent>
-										</div>
-									</div>
-								</div>
-							}
-						/>
-					</div>
-				</div>
-			</div>
-		);
-	}
+									)
+							)}
+						</Grid>
+
+						<Grid container item justify='center' style={{ padding: '5%' }} sm={6}>
+							<Grid container className={classes.vedio} >
+								<Videojs {...videoJsOptions} />
+							</Grid>
+
+						</Grid>
+					</Grid>
+					<Grid item container justify='space-evenly' style={{ paddingTop: '1%', paddingBottom: '5%' }} >
+						<Fab variant='extended' type='submit' classes={{ label: classes.buttonLabel }} className={classes.button}>Previous{loading && <CircularProgress />}</Fab>
+						<Fab variant='extended' type='submit' classes={{ label: classes.buttonLabel }} className={classes.button}>Save & Next{loading && <CircularProgress />}</Fab>
+						<Fab variant='extended' type='submit' classes={{ label: classes.buttonLabel }} className={classes.button}>Skip{loading && <CircularProgress />}</Fab>
+
+					</Grid>
+				</CardComponent>
+
+			</Grid>
+		</>
+	);
 }
 
-export default withStyles(style)(Practice);
+export default (Practice);

@@ -1,38 +1,69 @@
 import React from 'react';
 import { withStyles } from '@material-ui/styles';
-import { pxToVh, pxToVw } from '../theme';
+import { pxToVh, pxToVw, Theme } from '../theme';
 import Grid from '@material-ui/core/Grid';
-import CardComponent from './cardEmbossed';
-import CardDepth from './cardDepth';
-// import './Loader.css';
+import { SvgIcon, Typography } from '@material-ui/core';
+import clsx from 'clsx'
+import BigLogo from '../static/logo/BigLogo.png';
 
 const styles = () => ({
 	root: {
 		height: '100vh',
 		width: '100vw',
-		backgroundColor: '#F0F1F5',
+		flexDirection: 'column',
+		background:Theme.boxColor
+	},
+	title:{
+		color:'#fff',fontWeight:'bold',letterSpacing:1
+	},
+	logo:{
+		height: 200, width: 200
 	},
 	radius: {
 		borderRadius: '20px',
 	},
 	rotate: {
-		transform: `rotate(0deg)`,
+		animation:'$rotate 1.5s cubic-bezier(0, 1.01, 0.92, 1.34)',
+	},
+	fade: {
+		animation: '$fade linear 1s ',
+		animationIterationCount: 1,
+		animationFillMode: 'forwards',
 	},
 	depthBackground: {
-		animation: '$load linear 2s ',
+		animation: '$load linear 1s ',
 		animationIterationCount: 1,
 		animationFillMode: 'forwards',
 	},
 	'@keyframes load': {
 		'0%': {
-			background: '#F0F1F5',
-			boxShadow: `inset 4px 3px 7px #C6CCE1 ,
-inset -3px -4px 7px white`,
+			background: '#F0F1F5', 
+			
+		},
+		'95%': {
+			background: '#8363ef',
+			// boxShadow: `inset 0px 0px 0px #C6CCE1 ,inset -0px -0px 0px white`,
+		},
+		'96%': {
+			background:'transparent radial-gradient(farthest-corner at 100% 0%, #8363ef 0%, #8363ef 31%, #8363ef 69%, #8363ef 100%) 0% 0% no-repeat padding-box',
+			// boxShadow: `inset 0px 0px 0px #C6CCE1 ,inset -0px -0px 0px white`,
+		},
+		'97%': {
+			background:'transparent radial-gradient(farthest-corner at 100% 0%, #8363ef 0%, #8363ef 31%, #8363ef 69%, #8D3DDC 100%) 0% 0% no-repeat padding-box',
+			// boxShadow: `inset 0px 0px 0px #C6CCE1 ,inset -0px -0px 0px white`,
+		},
+		'98%': {
+			background:'transparent radial-gradient(farthest-corner at 100% 0%, #8363ef 0%, #8363ef 31%, #8A51E4 69%, #8D3DDC 100%) 0% 0% no-repeat padding-box',
+			// boxShadow: `inset 0px 0px 0px #C6CCE1 ,inset -0px -0px 0px white`,
+		},
+		'99%': {
+			background:'transparent radial-gradient(farthest-corner at 100% 0%, #8363ef 0%, #8167F2 31%, #8A51E4 69%, #8D3DDC 100%) 0% 0% no-repeat padding-box',
+			// boxShadow: `inset 0px 0px 0px #C6CCE1 ,inset -0px -0px 0px white`,
 		},
 		'100%': {
-			background: 'crimson',
-			boxShadow: `inset 0px 0px 0px #C6CCE1 ,
-inset -0px -0px 0px white`,
+			// background: 'crimson',
+			background: Theme.boxColor,
+			// boxShadow: `inset 0px 0px 0px #C6CCE1 ,inset -0px -0px 0px white`,
 		},
 	},
 	embossShadow: {
@@ -42,12 +73,27 @@ inset -0px -0px 0px white`,
 	},
 	'@keyframes load2': {
 		'0%': {
-			boxShadow: `4px 4px 7px 0px #C6CCE1,
-  -4px -4px 7px 0px white`,
+			boxShadow: `4px 4px 7px 0px #C6CCE1,  -4px -4px 7px 0px white`,
 		},
 		'100%': {
-			boxShadow: `0px 0px 0px 0px #C6CCE1,
-  -0px -0px 0px 0px white`,
+			boxShadow: `0px 0px 0px 0px #C6CCE1,  -0px -0px 0px 0px white`,
+		},
+	},
+
+	'@keyframes rotate': {
+		'0%': {
+			transform: `rotate(0deg)`,
+		},
+		'100%': {
+			transform: `rotate(360deg)`,
+		},
+	},
+	'@keyframes fade': {
+		'0%': {
+			color: `#c6cce100`,
+		},
+		'100%': {
+			color: `#FFFFFF`,
 		},
 	},
 });
@@ -65,28 +111,15 @@ class Loader extends React.Component {
 				container
 				alignItems="center"
 				justify="center"
-				className={classes.root}>
-				<div
-					style={{ height: '314px', width: '314px' }}
-					className={classes.rotate}>
-					<CardDepth
-						classes={{
-							baseStyle: `${classes.radius}`,
-							root: classes.depthBackground,
-						}}>
-						<div style={{ height: '90%', width: '90%' }}>
-							<CardComponent
-								classes={{
-									baseStyle: classes.radius,
-									root: classes.embossShadow,
-								}}
-							/>
-						</div>{' '}
-					</CardDepth>
-				</div>
+				className={clsx(classes.root,)}>
+				<img src={BigLogo} alt="Qriocty Box"  className={clsx(classes.logo,classes.rotate)} />
+				<Typography variant='h6' className={clsx(classes.fade,classes.title)}>
+					Hunt for Curiosity
+				</Typography>
 			</Grid>
 		);
 	}
 }
+
 
 export default withStyles(styles)(Loader);
