@@ -1,5 +1,6 @@
-import React from 'react';
+import React from 'react'; 
 import Grid from '@material-ui/core/Grid';
+import {url} from '../config/config'
 import { pxToVh, pxToVw, Theme } from './../theme';
 import Typography from '@material-ui/core/Typography';
 import { Link as RouterLink } from 'react-router-dom'
@@ -11,14 +12,17 @@ import BigLogo from '../static/logo/BigLogoText.png';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import InstagramIcon from '@material-ui/icons/Instagram';
 import LinkedInIcon from '@material-ui/icons/LinkedIn';
+import YouTubeIcon from '@material-ui/icons/YouTube';
+
+import { useState } from 'react';
+import { toast } from 'react-toastify';
+
 
 const styles = makeStyles(t => ({
 	root: {
-		// width: '100%',
 		display: 'flex',
 		color: Theme.textColor.color1,
 		flexDirection: 'column',
-		// height: pxToVh(499),
 		padding: pxToVw(50),
 		paddingBottom: 0,
 		background: Theme.boxColor,
@@ -28,7 +32,6 @@ const styles = makeStyles(t => ({
 			fontFamily: 'Poppins',
 			fontSize: 18,
 			lineHeight: 2,
-			// fontWeight: 700,
 			cursor: 'pointer'
 		},
 		paddingTop: 30,
@@ -43,29 +46,23 @@ const styles = makeStyles(t => ({
 	},
 	icon: {
 		color: '#000',
-		// padding:0,
-		// height: 'inherit',
-		// width: 'inherit',
+		padding:0 
+	},
+	inputBase:{
+		borderRadius:'inherit',
+		color: Theme.textColor.placeholder,
 	},
 	input: {
 		color: Theme.textColor.placeholder,
+		borderRadius: 'inherit',
 		fontFamily: 'Poppins',
-		fontSize: pxToVw(22),
-		fontWeight: '500',
-
-		paddingLeft: pxToVw(15),
-		paddingRight: pxToVw(15),
-		margin: 0,
-		height: '100%',
+		paddingLeft: 15,
+		
 		'&::placeholder': {
 			color: Theme.textColor.placeholder,
 			fontFamily: 'Poppins',
-			fontSize: 12,
-			fontWeight: '500',
-			opacity: '1',
-			paddingLeft: 15,
-			margin: 0,
-			height: '100%',
+			fontSize: 15, 
+			opacity: '1',  
 		},
 	},
 	newsletter: {
@@ -75,13 +72,11 @@ const styles = makeStyles(t => ({
 		alignItems: 'flex-end',
 		[t.breakpoints.down('xs')]: {
 			paddingTop: 50,
-			// paddingBottom: 50,
 			alignItems: 'center',
 
 		},
 		'& p': {
 			fontFamily: 'Poppins',
-			// fontSize: pxToVh(30),
 			fontWeight: 200,
 		},
 
@@ -94,13 +89,6 @@ const styles = makeStyles(t => ({
 		}
 	},
 
-	button: {
-		paddingTop: pxToVw(51),
-		boxSizing: 'border-box',
-		cursor: 'pointer',
-		textAlign: "center",
-
-	},
 	pay: {
 		paddingTop: pxToVh(60),
 		textAlign: 'center'
@@ -112,7 +100,8 @@ const styles = makeStyles(t => ({
 	released: {
 		boxShadow: `4px 4px 5px 1px rgba(00,00,00,0.2),-4px -4px 5px 1px rgba(255,255,255,0.2)`,
 		background: Theme.boxColor,
-		height: 40
+		height: 40,
+		margin: '20px 0'
 	},
 	label: {
 		color: Theme.textColor.color2,
@@ -122,38 +111,56 @@ const styles = makeStyles(t => ({
 
 const Footer = () => {
 	const sty = styles();
+	const [state, setState] = useState({})
+	const subscribe = (e) => {
+		e.preventDefault()
+		fetch(`${url}/subscribe`,{
+			method:'POST',
+			body:JSON.stringify(state),
+			headers: {
+				'Content-Type': 'application/json' 
+			  },
+		}).then(res=>{res.json().then(d=>{
+			console.log(d);
+			d.success && toast.success('Successfully register in our database. We are in touch now')
+			d.error && toast.error('Sorry ! Something went wrong. Please try again.')
+		})})
+	}
+	const handleChange = (e) => {
+		setState({ ...state, [e.target.id]: e.target.value })
+	}
 	return (
 		<Grid container justify='center' alignItems='center' className={sty.root} >
 			<img src={BigLogo} alt="" style={{ height: 170, width: 150 }} />
-			{/* <Typography variant='h5'>QRIOCTY BOX</Typography> */}
-			<Typography variant='subtitle1' style={{padding:'12px 0',fontWeight:'bold'}}>Hunt for Curiosity</Typography>
-			
-			<Grid  alignItems='center' container style={{padding:'12px 7%',flexDirection: 'column'}}>
-			<Typography variant='h5'>GATE</Typography>
-			<br />
-			<Typography variant='body2'>
-				GATE (Graduate Aptitude Test in Engineering) is a computer based examination conducted to test the applicant in engineering & science
-				concepts in the under graduate program. This is a national level examination attempted by around 10 lakh candidates trying to
-				secure a job at PSU's and/or to get admitted to prestigious institutes for Masters. The question papers are set by IISC & IIT's each year.
-	<Link color='textSecondary' component={RouterLink} to='/courses/gate'>{' '}know more</Link>
-			</Typography>
-			<br />
-			<Typography variant='h5'>TECHNICAL GAMES</Typography>
-			<br />
-			<Typography variant='body2'>
-				From statistical data it has been analyzed that almost 80 percent of the students who are in there final year of B. Tech are confused
-				regarding should they pursue higher studies or grab a campus placement from their respective colleges Of Further survey it has been
-				seen that most of the students starts scavenging the internet to acquire study materials for appearing in GATE IES etc. and other
-				government exam and separately they buy study material for recruitment focused tests. This way of approach might seem to be
-				correct but in reality, the students following this path gets lost in the middle and ends up Sacrifice one of the other and enters into a
-				dilemma weather to focus on recruitment drives or government exams Help students from entering into this dilemma, we at QRIOCITY BOX
-				have come up with this unique package called TECHNICAL GAME which has been designed to help students by providing a single game
-				to tackle both recruitment exams and as well as the government exams this course covers all the pillars of recruitment exams involving
-				aptitude logical reasoning and technical section which also includes interview specific core questions created by industry professionals.
+			<Typography variant='subtitle1' style={{ padding: '12px 0', fontWeight: 'bold' }}>Hunt for Curiosity</Typography>
+
+			<Grid alignItems='center' container style={{ padding: '12px 7%', flexDirection: 'column' }}>
+				<Typography variant='h5'>GATE</Typography>
+				<br />
+				<Typography variant='body2'>
+					GATE (Graduate Aptitude Test in Engineering) is a computer based examination conducted to test the applicant in engineering & science
+					concepts in the under graduate program. This is a national level examination attempted by around 10 lakh candidates trying to
+					secure a job at PSU's and/or to get admitted to prestigious institutes for Masters. The question papers are set by IISC & IIT's each year.
+			<Link color='textSecondary' component={RouterLink} to='/courses/gate'>{' '}know more</Link>
+				</Typography>
+				<br />
+				<Typography variant='h5'>TECHNICAL GAMES</Typography>
+				<br />
+				<Typography variant='body2'>
+					From statistical data it has been analyzed that almost 80 percent of the students who are in there final year of B. Tech are confused
+					regarding should they pursue higher studies or grab a campus placement from their respective colleges Of Further survey it has been
+					seen that most of the students starts scavenging the internet to acquire study materials for appearing in GATE IES etc. and other
+					government exam and separately they buy study material for recruitment focused tests. This way of approach might seem to be
+					correct but in reality, the students following this path gets lost in the middle and ends up Sacrifice one of the other and enters into a
+					dilemma weather to focus on recruitment drives or government exams Help students from entering into this dilemma, we at QRIOCTY BOX
+					have come up with this unique package called TECHNICAL GAME which has been designed to help students by providing a single game
+					to tackle both recruitment exams and as well as the government exams this course covers all the pillars of recruitment exams involving
+					aptitude logical reasoning and technical section which also includes interview specific core questions created by industry professionals.
 				<Link color='textSecondary' component={RouterLink} to='/courses/techgame'>{' '}know more</Link>
-			</Typography>
+				</Typography>
 			</Grid>
 			<br />
+
 			<Grid className={sty.social} container>
 				<Grid item className={sty.list} sm={4}>
 					<Typography variant='body1'>Terms & Conditions</Typography>
@@ -164,7 +171,7 @@ const Footer = () => {
 				<Grid item container justify='space-evenly' alignItems='center' sm={4}>
 
 
-					<ButtonComponent style={{ height: 70, width: 70, }}>
+					<ButtonComponent style={{ height: 40, width: 40, }}  onClick={()=>{window.location='https://www.instagram.com/qrioctybox/'}}>
 						<CardDepth style={{ height: '80%', width: '80%' }}>
 							<IconButton className={sty.icon} >
 								<InstagramIcon />
@@ -172,7 +179,7 @@ const Footer = () => {
 						</CardDepth>
 					</ButtonComponent>
 
-					<ButtonComponent style={{ height: 70, width: 70 }}>
+					<ButtonComponent style={{ height: 40, width: 40 }}  onClick={()=>{window.location='https://www.facebook.com/qrioctybox/'}}>
 						<CardDepth style={{ height: '80%', width: '80%' }}>
 							<IconButton className={sty.icon}>
 								<FacebookIcon />
@@ -180,7 +187,15 @@ const Footer = () => {
 						</CardDepth>
 					</ButtonComponent>
 					<ButtonComponent
-						style={{ height: 70, width: 70, }}>
+						style={{ height: 40, width: 40, }} onClick={()=>{window.location='https://www.youtube.com/channel/UCFI607_YfGNUmlw7E6HTu5g'}}>
+						<CardDepth style={{ height: '80%', width: '80%' }}>
+							<IconButton className={sty.icon} >
+								<YouTubeIcon />
+							</IconButton>
+						</CardDepth>
+					</ButtonComponent>
+					<ButtonComponent
+						style={{ height: 40, width: 40, }}>
 						<CardDepth style={{ height: '80%', width: '80%' }}>
 							<IconButton className={sty.icon} >
 								<LinkedInIcon />
@@ -189,45 +204,53 @@ const Footer = () => {
 					</ButtonComponent>
 				</Grid>
 				<Grid item className={sty.newsletter} sm={4}>
-					<Typography variant='subtitle1'>Newsletter</Typography>
-					<div className={sty.newsletterInput}>
-						<CardDepth>
+					<Typography variant='h5'>Newsletter</Typography>
 
-							<Input
-								id='name'
-								disableUnderline
-								fullWidth
-								autoComplete="off"
-								placeholder='Name'
-								classes={{ input: sty.input }}
-							/>
-						</CardDepth>
-					</div>
-					<div className={sty.newsletterInput}>
-						<CardDepth>
+					<form  style={{ display: 'contents' }} onSubmit={subscribe}>
+						<div className={sty.newsletterInput}>
+							<CardDepth>
 
-							<Input
-								id='email'
-								disableUnderline
-								fullWidth
-								autoComplete="off"
-								placeholder='E-mail'
-								classes={{ input: sty.input }}
-							/>
-						</CardDepth>
-					</div>
-					<div className={sty.button}
-					// onClick={imageUpload}
-					>
-						<Fab variant='extended' classes={{ label: sty.label, }} className={sty.released}>Register for free</Fab>
-					</div>
+								<Input
+									id='name'
+									required
+									onChange={handleChange}
+									value={state.name}
+									disableUnderline
+									fullWidth
+									autoComplete="off"
+									type='text'
+									placeholder='Name' 
+									className={sty.inputBase}
+									classes={{ input: sty.input }}
+									/>
+							</CardDepth>
+						</div>
+						<div className={sty.newsletterInput}>
+							<CardDepth>
+
+								<Input
+									className={sty.inputBase}
+									onChange={handleChange}
+									value={state.email}
+									id='email'
+									type='email'
+									required
+									disableUnderline
+									fullWidth
+									placeholder='E-mail'
+									classes={{ input: sty.input }}
+								/>
+							</CardDepth>
+						</div>
+						<Fab variant='extended' type='submit' classes={{ label: sty.label, }} className={sty.released}>Register for free</Fab>
+					</form>
 
 				</Grid>
-				<Grid item xs={12} className={sty.pay}>
+				{/* <Grid item xs={12} className={sty.pay}>
 
-				</Grid>
+				</Grid> */}
 				<Grid item xs={12} className={sty.copy}>
-					<p>{'© '}{new Date().getFullYear()}{' '} Qriocty Box. All rights reserved </p>
+					<p>{'© '}{new Date().getFullYear()}{' '} Qriocty Box Education Service. All rights reserved </p>
 				</Grid>
 			</Grid>
 

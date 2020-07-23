@@ -1,13 +1,9 @@
 import React, { useEffect } from 'react';
-import { withStyles } from '@material-ui/styles';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import Input from '@material-ui/core/Input';
 import { pxToVh, pxToVw, Theme } from './../theme';
-import Footer from '../Components/Footer';
-import CardDepth from '../Components/cardDepth';
-import ButtonComponent from '../Components/button';
 import CardComponent from '../Components/cardEmbossed';
+import Footer from '../Components/Footer'
 // import SlideOne from '../static/Studying_bro.svg';
 import SlideOne from '../static/home.svg';
 import SlideTwo from '../static/Virtual_reality.svg';
@@ -20,6 +16,7 @@ import SlideFiveA from '../static/Documents_bro.svg';
 import SlideFiveB from '../static/Reading_list.svg';
 import SlideSix from '../static/Report.svg';
 import BigLogo from '../static/logo4.svg';
+import FreeCourse from '../static/Gift-bro.svg'
 
 import { makeStyles, Fab, Toolbar } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
@@ -42,7 +39,7 @@ const styles = makeStyles(t => ({
 	firstSlideParent: {
 		minHeight: 600,
 		[t.breakpoints.down('xs')]: {
-			flexDirection: 'column-reverse',
+			flexDirection: 'column',
 			height: 'auto',
 			minHeight: 500,
 			paddingBottom: 40,
@@ -71,7 +68,7 @@ const styles = makeStyles(t => ({
 		}
 	},
 	secondSlideParent: {
-		minHeight: 600,
+		// minHeight: 600,
 	},
 	secondImg: {
 		width: '100%', maxHeight: 500,
@@ -101,6 +98,7 @@ const styles = makeStyles(t => ({
 	thirdSlideParent: {
 		// minHeight: '90vh',
 		width: '100%',
+		background: Theme.boxColor,
 		display: 'flex',
 		[t.breakpoints.down('xs')]: {
 			flexDirection: 'column-reverse'
@@ -161,12 +159,10 @@ inset -3px -4px 7px white`,
 		fontWeight: 600,
 		textAlign: 'center',
 		paddingLeft: 25,
+		paddingRight: 25,
 		[t.breakpoints.down('xs')]: {
-
 			padding: '30px 10% 0',
-
 			fontSize: 20,
-
 		}
 	},
 	heading2: {
@@ -174,12 +170,12 @@ inset -3px -4px 7px white`,
 		letterSpacing: pxToVw(0.9),
 		lineHeight: 1.5,
 		textAlign: 'center',
-		paddingLeft: 25,
+		paddingLeft: 50,
+		paddingRight: 50,
 		[t.breakpoints.down('xs')]: {
 			padding: "30px 5%",
 			fontSize: 15,
 			paddingBottom: 30,
-
 		}
 	},
 	firstImg: {
@@ -190,7 +186,7 @@ inset -3px -4px 7px white`,
 		}
 	},
 	thirdImg: {
-		width: '100%', maxHeight: 500,
+		width: '80%', maxHeight: 500,
 		[t.breakpoints.down('xs')]: {
 			height: '50vh',
 			width: '75vw',
@@ -208,11 +204,24 @@ inset -3px -4px 7px white`,
 		color: Theme.textColor.heading,
 		fontWeight: 'bold',
 		textAlign: 'center',
-		paddingBottom: 90,
-		[t.breakpoints.down('xs')]:{
+		paddingBottom: 60,
+		[t.breakpoints.down('xs')]: {
 			paddingTop: 90,
 			paddingBottom: 0,
 		}
+	},
+	whyText: {
+		color: Theme.textColor.heading,
+		fontWeight: 'bold',
+		textAlign: 'center',
+		padding: '60px 0 30px',
+		[t.breakpoints.down('xs')]: {
+			paddingTop: 90,
+			paddingBottom: 0,
+		}
+	},
+	d3: {
+		padding: '0 3%'
 	}
 }))
 
@@ -222,10 +231,26 @@ const firstSlide = (classes, register) => {
 	return (<div style={{ background: Theme.boxColor }}>
 		<Toolbar />
 		<Grid container justify='center' alignItems='center' className={classes.firstSlideParent}>
-			<Grid item sm={7} xs={12} container justify='center' className={classes.firstSlideText}
+
+			<Grid item sm={5} xs={12}
+				container
+				justify="center"
+				alignItems="center"
+				style={{
+					height: '100%', padding: '5%'
+				}}>
+				<img className={classes.firstImg}
+					src={SlideOne}
+					alt=""
+				/>
+
+			</Grid>
+
+
+			<Grid item sm={7} xs={12} container className={classes.firstSlideText}
 				container spacing={2}
 				alignItems="center"
-				justify='space-around'
+				justify='space-evenly'
 			>
 				<Typography variant='h4' className={classes.heading} >
 					Join India's 1<sup>st</sup> practicing platform for
@@ -233,7 +258,7 @@ const firstSlide = (classes, register) => {
 								</Typography>
 				<Typography variant='h6' className={classes.heading2} >
 					Enroll in our course & start practicing for your upcoming
-					competitive exams with Qriocity Box
+					competitive exams with Qriocty Box
 								</Typography>
 
 				{/* <div className={classes.search1st}>
@@ -263,35 +288,14 @@ const firstSlide = (classes, register) => {
 					<Fab variant='extended' onClick={register} classes={{ label: classes.label, }} className={classes.released}>Register for free</Fab>
 				</Grid>
 			</Grid>
-			<Grid item sm={5} xs={12}
-				container
-				justify="center"
-				alignItems="center"
-				style={{
-					height: '100%', padding: '5%'
-				}}>
-				<img className={classes.firstImg}
-					src={SlideOne}
-					alt=""
-				/>
 
-			</Grid>
+
 		</Grid></div>
 	);
 };
 const secondSlide = (classes) => {
 	return (
-		<Grid container justify="center"
-			alignItems="center" className={classes.secondSlideParent}>
-			<Grid item sm={5} style={{ padding: '4%' }}
-				container
-				alignItems="center"
-				justify="center"
-			>
-				<img
-					src={SlideTwo} className={classes.secondImg} alt=""
-				/>
-			</Grid>
+		<Grid container justify="center" alignItems="center" className={classes.secondSlideParent}>
 
 			<Grid item
 				sm={7}
@@ -299,7 +303,7 @@ const secondSlide = (classes) => {
 				justify="center"
 				alignItems="center"
 				className={classes.secondText}
-				style={{ padding: '0 3%' }}
+				style={{ padding: '0 5%' }}
 			>
 				<CardComponent style={{ padding: '26px 0' }}>
 					<Grid container alignItems="center" justify="center" style={{ flexDirection: 'column' }}>
@@ -322,59 +326,70 @@ const secondSlide = (classes) => {
 					</Grid>
 				</CardComponent>
 			</Grid>
+			<Grid item sm={5} style={{ padding: '4%' }}
+				container
+				alignItems="center"
+				justify="center"
+			>
+				<img
+					src={SlideTwo} className={classes.secondImg} alt=""
+				/>
+			</Grid>
+
 		</Grid>
 	);
 };
 const thirdSlide = (classes) => {
 	return (
 		<Grid container alignItems='center' justify='center' className={classes.thirdSlideParent}>
-			<Grid container item sm={6} justify='center' alignItems='center' className={classes.thirdText}>
-
-				<CardComponent>
-					<Grid
-						justify='space-around'
-						container
-						alignItems='center'
-						style={{ minHeight: 600, flexDirection: 'column', color: '#fff', padding: ' 0 7vw', textAlign: 'center' }}>
-						<Typography variant='h6'>
-							STEP 1
-								</Typography>
-						<Typography variant='body1'>
-							Start practicing
-							Tier 1 Questions
-								</Typography>
-						<Typography variant='h6'>
-							STEP 2
-								</Typography>
-						<Typography variant='body1'>
-							Open after finishing Tier 1.
-							Start practicing
-							Tier 2 Questions
-								</Typography>
-						<Typography variant='h6'>
-							STEP 3
-								</Typography>
-						<Typography variant='body1'>
-							Start Critical Thinking Zone
-							after completing
-							Tier 2 Questions
-								</Typography>
-						<Typography variant='h6'>
-							STEP 4
-								</Typography>
-						<Typography variant='body1'>
-							Goodies Unlocked
-							Free Mock Tests
-								</Typography>
-
-					</Grid>
-				</CardComponent>
-
-
-			</Grid>
-			<Grid item sm={6} container style={{ padding: '4%' }} alignItems="center" justify="center">
+			<Grid item sm={6} container style={{ padding: '4%' }} alignItems="center" justify='flex-end'>
 				<img src={SlideThreeA} className={classes.thirdImg} alt="" />
 			</Grid>
+			<Grid container item sm={6} justify='center' alignItems='center' className={classes.thirdText}>
+
+
+				<Grid
+					justify='space-around'
+					container
+					alignItems='center'
+					style={{ minHeight: 600, flexDirection: 'column', color: '#fff', padding: ' 0 7vw', textAlign: 'center' }}>
+					<Typography variant='h6'>
+						STEP 1
+								</Typography>
+					<Typography variant='body1'>
+						Start practicing
+						Tier 1 Questions
+								</Typography>
+					<Typography variant='h6'>
+						STEP 2
+								</Typography>
+					<Typography variant='body1'>
+						Open after finishing Tier 1.
+						Start practicing
+						Tier 2 Questions
+								</Typography>
+					<Typography variant='h6'>
+						STEP 3
+								</Typography>
+					<Typography variant='body1'>
+						Start Critical Thinking Zone
+						after completing
+						Tier 2 Questions
+								</Typography>
+					<Typography variant='h6'>
+						STEP 4
+								</Typography>
+					<Typography variant='body1'>
+						Goodies Unlocked
+						Free Mock Tests
+								</Typography>
+
+				</Grid>
+
+
+
+			</Grid>
+
 		</Grid>
 	);
 };
@@ -396,12 +411,11 @@ const fourthData = [
 	},
 
 ]
-
 const fourthSlide = (classes) => {
 	const fourMap = fourthData ? fourthData.map((p, i) => {
 		return (
 			<div key={i} className={classes.fourthCard} >
-				<CardComponent style={{ padding: '50px 0' }}
+				<CardComponent style={{ padding: '50px 0 0' }}
 					children={
 						<Grid
 							container
@@ -429,7 +443,7 @@ const fourthSlide = (classes) => {
 								<img
 									src={p.img}
 									style={{
-										width: '100%', maxHeight: 500,
+										width: '90%', maxHeight: 400,
 									}}
 									alt=""
 								/>
@@ -464,7 +478,7 @@ const fifthSlide = (classes, register) => {
 	return (
 		<>
 			<Grid style={{
-				padding: `70px ${pxToVw(47)}`,
+				padding: `70px ${pxToVw(150)}`,
 			}}>
 				<CardComponent>
 					<Grid container alignItems="center" justify="center" className={classes.fifthSlideParent}  >
@@ -485,13 +499,13 @@ const fifthSlide = (classes, register) => {
 								}}>
 								-Bank
 											</Typography>
-							<Typography variant='body2'
+							<Typography variant='subtitle1'
 								style={{
 									lineHeight: 2,
 									color: Theme.textColor.color1,
 									width: '100%',
 									textAlign: 'center',
-									padding: '15%',
+									padding: '10%',
 								}}>
 								Q-Bank has been created by the
 												<br /> Qrious minds of every examiner.
@@ -516,7 +530,7 @@ const fifthSlide = (classes, register) => {
 			</Grid>
 
 			<Grid style={{
-				padding: `70px ${pxToVw(47)}`,
+				padding: `70px ${pxToVw(150)}`,
 			}}>
 				<CardComponent>
 					<Grid container alignItems="center" justify="center" className={classes.fifthSlideParent2} >
@@ -535,13 +549,13 @@ const fifthSlide = (classes, register) => {
 								}}>
 								-Book
 											</Typography>
-							<Typography variant='body2'
+							<Typography variant='subtitle1'
 								style={{
 									lineHeight: 2,
 									color: Theme.textColor.color1,
 									width: '100%',
 									textAlign: 'center',
-									padding: '15%',
+									padding: '10%',
 								}}>
 								Q-Book is the resource center where all
 								<br />topics are represented by video or
@@ -565,55 +579,6 @@ const fifthSlide = (classes, register) => {
 				</CardComponent>
 			</Grid>
 
-			<Grid style={{
-				padding: `70px ${pxToVw(47)} 140px`,
-			}}>
-				<CardComponent>
-					<Grid container alignItems="center" justify="center" className={classes.fifthSlideParent} >
-						<Grid
-							item sm={6}
-							container
-							justify="center"
-							alignItems="center">
-							<Typography variant='h6'
-								style={{
-									color: Theme.textColor.color1,
-									fontWeight: 'bold',
-									textAlign: 'center'
-								}}>
-								Providing DEMO
-								presentation<br /> at your
-								campus
-											</Typography>
-							<Typography variant='body2'
-								style={{
-									lineHeight: 2,
-									color: Theme.textColor.color1,
-									width: '100%',
-									textAlign: 'center',
-									padding: '15%',
-								}}>
-								Interested in learning more
-								about Q-box?
-								<br />Register below & we
-								<br />may present you with a
-								<br />seminar at your campus.
-								</Typography>
-
-							<Fab variant='extended' onClick={register} classes={{ label: classes.label, }} className={classes.released}>
-								Register for Seminar</Fab>
-
-						</Grid>
-						<Grid item sm={6} style={{ padding: '4%' }}>
-							<img
-								src={SlideSix}
-								style={{ maxHeight: 500, width: '100%', }}
-								alt=""
-							/>
-						</Grid>
-					</Grid>
-				</CardComponent>
-			</Grid>
 
 
 		</>
@@ -623,96 +588,273 @@ const fifthSlide = (classes, register) => {
 
 const sixthSlide = (classes, register) => {
 	return (
-		<div className={classes.fourthSlideParent}>
-			<CardDepth>
-				<div style={{ height: pxToVh(770), width: pxToVw(1580) }}>
-					<CardComponent
-						children={
-							<Grid
-								container
-								alignItems="center"
-								justify="center"
-								style={{ height: '100%', width: '100%' }}>
-								<Grid
-									item
-									container
-									justify="center"
-									alignItems="center"
-									xs={7}
-									style={{ height: '100%' }}>
-									<Grid
-										container
-										justify="center"
-										style={{
-											height: '100%',
-											width: '100%',
-											textAlign: '-webkit-center',
-											padding: '6% 6%',
-											boxSizing: 'border-box',
-										}}>
-										<Typography
-											style={{
-												fontFamily: 'Poppins',
-												fontSize: Theme.fontSize.size2,
-												color: Theme.textColor.color1,
-												fontWeight: 'bold',
-											}}>
-											Providing DEMO<br />
-											presentation at your
-											campus
-											</Typography>
-										<Typography
-											style={{
-												padding: "50px 0",
-												fontSize: Theme.fontSize.size4,
-												color: Theme.textColor.color1,
-												width: '100%',
-												textAlign: 'center',
-												// fontWeight: '500',
-												lineHeight: 2
-											}}>
-											Interested in learning more
-												<br /> about Q-box?
-												<br /> Register below & we
-												<br /> may present you with a
-												<br /> seminar at your campus
-											</Typography>
+		<Grid style={{
+			padding: `70px ${pxToVw(150)} 140px`,
+		}}>
+			<CardComponent>
+				<Grid container alignItems="center" justify="center" className={classes.fifthSlideParent} >
+					<Grid
+						item sm={6}
+						container
+						justify="center"
+						alignItems="center">
+						<Typography variant='h6'
+							style={{
+								color: Theme.textColor.color1,
+								fontWeight: 'bold',
+								textAlign: 'center'
+							}}>
+							Providing DEMO
+							presentation<br /> at your
+							campus
+										</Typography>
+						<Typography variant='subtitle1'
+							style={{
+								lineHeight: 2,
+								color: Theme.textColor.color1,
+								width: '100%',
+								textAlign: 'center',
+								padding: '13%',
+							}}>
+							Interested in learning more
+							about Q-box?
+							<br />Register below & we
+							<br />may present you with a
+							<br />seminar at your campus.
+							</Typography>
 
-										<Fab variant='extended' onClick={register} classes={{ label: classes.label, }} className={classes.released}>
-											Register for Seminar</Fab>
-									</Grid>
-								</Grid>
-								<Grid item xs={5}>
-									<img
-										src={SlideSix}
-										style={{ height: pxToVh(518), width: '100%' }}
-										alt=""
-									/>
-								</Grid>
-							</Grid>
-						}
-					/>
-				</div>
-			</CardDepth>
-		</div>
+						<Fab variant='extended' onClick={register} classes={{ label: classes.label, }} className={classes.released}>
+							Register for Seminar</Fab>
+
+					</Grid>
+					<Grid item sm={6} style={{ padding: '4%' }}>
+						<img
+							src={SlideSix}
+							style={{ maxHeight: 500, width: '90%', }}
+							alt=""
+						/>
+					</Grid>
+				</Grid>
+			</CardComponent>
+		</Grid>
+
 	);
 };
-
-const footer = (classes) => {
+const freeCourseSlide = (classes, register) => {
 	return (
-		<div
-			style={{
-				height: pxToVh(648),
-				width: '100%',
-				paddingTop: '13.8vh',
-				boxSizing: 'border-box',
-				paddingBottom: 0,
-			}}>
-			<Footer />
-		</div>
+		<Grid style={{
+			padding: `70px ${pxToVw(150)} 140px`,
+		}}>
+			<CardComponent>
+				<Grid container alignItems="center" justify="center" className={classes.fifthSlideParent} >
+					<Grid item sm={6} style={{ padding: '4%' }}>
+						<img
+							src={FreeCourse}
+							style={{ maxHeight: 500, width: '90%', }}
+							alt=""
+						/>
+					</Grid>
+
+					<Grid
+						item sm={6}
+						container
+						justify="center"
+						alignItems="center">
+						<Typography variant='h6'
+							style={{
+								color: Theme.textColor.color1,
+								fontWeight: 'bold',
+								width: '100%',
+								textAlign: 'center',
+								paddingBottom: '10%'
+							}}>
+							Register Now<br /> & get a course <br />of your choice for free !!
+										</Typography>
+
+
+						<Fab variant='extended' onClick={register} classes={{ label: classes.label, }} className={classes.released}>
+							Know more</Fab>
+
+					</Grid>
+
+				</Grid>
+			</CardComponent>
+		</Grid>
+
 	);
 };
 
+const available = (sty) => {
+	return (
+		<Grid container justify='center' alignItems='center' style={{ padding: `70px ${pxToVw(150)} 140px`, }} >
+
+			<Grid item sm={6} className={sty.d3}>
+				<CardComponent >
+					<div style={{ padding: '15%', color: '#fff' }}>
+						<Typography variant='h4' style={{ color: '#fff', textAlign: 'center' }} className={sty.heading} >What we provide</Typography>
+						<Typography variant='subtitle1' style={{ lineHeight: 2, paddingTop: 22 }}>
+							1. Unlimited industrial and
+							specific government exam
+							questions with video solutions.
+								<br />
+							<br />
+								2. Concept Book.
+								<br />
+							<br />
+								3. Free Mock Test.
+								<br />
+							<br />
+								4. Quiz every week.
+								<br />
+							<br />
+								5. Gift box containing coding
+								or design technologies based
+								on the preference of the
+								student.
+								<br />
+							<br />
+								6. Effort based report.
+							</Typography>
+					</div>
+				</CardComponent>
+			</Grid>
+			<Grid item sm={6} className={sty.d3}>
+				<CardComponent >
+					<div style={{ padding: '15%', color: '#fff' }}>
+						<Typography variant='h4' style={{ color: '#fff', textAlign: 'center' }} className={sty.heading} >What we provide</Typography>
+						<Typography variant='subtitle1' style={{ lineHeight: 2, paddingTop: 22 }}>
+							1. Unlimited industrial and
+							specific government exam
+							questions with video solutions.
+								<br />
+							<br />
+								2. Concept Book.
+								<br />
+							<br />
+								3. Free Mock Test.
+								<br />
+							<br />
+								4. Quiz every week.
+								<br />
+							<br />
+								5. Gift box containing coding
+								or design technologies based
+								on the preference of the
+								student.
+								<br />
+							<br />
+								6. Effort based report.
+							</Typography>
+					</div>
+				</CardComponent>
+			</Grid>
+
+		</Grid>
+
+	);
+};
+const Courses = (sty) => {
+	return (
+		<Grid container justify='center' alignItems='center' style={{ padding: `70px ${pxToVw(150)} 140px`, }} >
+
+			<Grid item sm={6} className={sty.d3}>
+				<CardComponent >
+					<div style={{ padding: '15%', color: '#fff' }}>
+						<Typography variant='h4' style={{ color: '#fff', textAlign: 'center' }} className={sty.heading} >What we provide</Typography>
+						<Typography variant='subtitle1' style={{ lineHeight: 2, paddingTop: 22 }}>
+							1. Unlimited industrial and
+							specific government exam
+							questions with video solutions.
+								<br />
+							<br />
+								2. Concept Book.
+								<br />
+							<br />
+								3. Free Mock Test.
+								<br />
+							<br />
+								4. Quiz every week.
+								<br />
+							<br />
+								5. Gift box containing coding
+								or design technologies based
+								on the preference of the
+								student.
+								<br />
+							<br />
+								6. Effort based report.
+							</Typography>
+					</div>
+				</CardComponent>
+			</Grid>
+			<Grid item sm={6} className={sty.d3}>
+				<CardComponent >
+					<div style={{ padding: '15%', color: '#fff' }}>
+						<Typography variant='h4' style={{ color: '#fff', textAlign: 'center' }} className={sty.heading} >What we provide</Typography>
+						<Typography variant='subtitle1' style={{ lineHeight: 2, paddingTop: 22 }}>
+							1. Unlimited industrial and
+							specific government exam
+							questions with video solutions.
+								<br />
+							<br />
+								2. Concept Book.
+								<br />
+							<br />
+								3. Free Mock Test.
+								<br />
+							<br />
+								4. Quiz every week.
+								<br />
+							<br />
+								5. Gift box containing coding
+								or design technologies based
+								on the preference of the
+								student.
+								<br />
+							<br />
+								6. Effort based report.
+							</Typography>
+					</div>
+				</CardComponent>
+			</Grid>
+
+		</Grid>
+
+	);
+};
+
+const availableText = (classes) => {
+	return (
+		<Grid
+			container
+			alignItems="center"
+			justify="center"
+			style={{ width: '100%' }}>
+			<Typography variant='h4' style={{
+				color: Theme.textColor.heading,
+				fontWeight: 'bold'
+			}}>
+				ALSO AVAILABLE ON :
+				</Typography>
+		</Grid>
+	);
+};
+const coursesText = (classes) => {
+	return (
+		<Grid
+			container
+			alignItems="center"
+			justify="center"
+			style={{ width: '100%' }}>
+			<Typography variant='h4' style={{
+				color: Theme.textColor.heading,
+				fontWeight: 'bold'
+			}}>
+				COURSES
+				</Typography>
+		</Grid>
+	);
+};
 const successText = (classes) => {
 	return (
 		<Grid
@@ -726,25 +868,45 @@ const successText = (classes) => {
 		</Grid>
 	);
 };
+const whyusText = (classes) => {
+	return (
+		<Grid
+			container
+			alignItems="center"
+			justify="center"
+			style={{ width: '100%' }}>
+			<Typography variant='h4' className={classes.whyText} >
+				WHY US?
+				</Typography>
+		</Grid>
+	);
+};
 
 
 const Home = () => {
 	const history = useHistory()
-	const [state, setState] = React.useState({ buttonState: true })
 	useEffect(() => {
-		document.title = "India's 1st practicing platform for competitive exams | Qriocty Box"
-
+		document.title = "Qriocty Box | India's 1st practicing platform for competitive exams"
 	}, [])
 	const register = () => { history.push('/signup') }
 
 	const classes = styles()
 	const screenDivisions = [
 		firstSlide(classes, register),
+		whyusText(classes),
 		secondSlide(classes),
+		fourthSlide(classes),
 		successText(classes),
 		thirdSlide(classes),
-		fourthSlide(classes),
 		fifthSlide(classes),
+
+		coursesText(classes),
+		Courses(classes),
+		availableText(classes),
+		available(classes),
+
+		freeCourseSlide(classes),
+		sixthSlide(classes),
 	];
 	return (
 		<div className={`${classes.root} ${classes.scrollStyles}`}>

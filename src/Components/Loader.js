@@ -14,7 +14,10 @@ const styles = () => ({
 		background:Theme.boxColor
 	},
 	title:{
-		color:'#fff',fontWeight:'bold',letterSpacing:1
+		color:'#fff',fontWeight:'bold',letterSpacing:1, marginBottom: -80
+	},
+	Mtitle:{
+		color:'#fff',fontWeight:'bold',letterSpacing:1,fontFamily:'Wallman',paddingBottom:30
 	},
 	logo:{
 		height: 200, width: 200
@@ -113,6 +116,9 @@ class Loader extends React.Component {
 				justify="center"
 				className={clsx(classes.root,)}>
 				<img src={BigLogo} alt="Qriocty Box"  className={clsx(classes.logo,classes.rotate)} />
+				<Typography variant='h3' className={clsx(classes.fade,classes.Mtitle)}>
+					QRIOCTY BOX
+				</Typography>
 				<Typography variant='h6' className={clsx(classes.fade,classes.title)}>
 					Hunt for Curiosity
 				</Typography>

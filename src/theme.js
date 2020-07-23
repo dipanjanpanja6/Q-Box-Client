@@ -9,14 +9,15 @@ export const Theme = {
 	primaryColor: '#A7205F',
 	boxColor:
 		'transparent radial-gradient(farthest-corner at 100% 0%, #64B4D2 0%, #8167F2 31%, #8A51E4 69%, #8D3DDC 100%) 0% 0% no-repeat padding-box',
-	boxColorRed:'radial-gradient(at 100% 0%, rgb(183, 28, 28) 0%, rgb(229, 57, 53) 31%, #EF6C00 69%, #FFC107 100%) 0% 0% no-repeat padding-box padding-box transparent',	
-	
-		textColor: {
+	boxColorRed: 'radial-gradient(at 100% 0%, rgb(183, 28, 28) 0%, rgb(229, 57, 53) 31%, #EF6C00 69%, #FFC107 100%) 0% 0% no-repeat padding-box padding-box transparent',
+	outerBoxShadow: "4px 9px 6px #25252529",
+	textColor: {
 		color1: 'white',
 		color2: 'white',
 		placeholder: '#8C44DF',
 		heading2: '#8C44DF',
 		heading: '#8a2be2',
+		lightheading: "#9e52f7",
 	},
 	buttonColor: {
 		// color1: '#00C9B7',
