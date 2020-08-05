@@ -6,7 +6,6 @@ import { pxToVw, Theme } from './../theme';
 import CardDepth from '../Components/cardDepth';
 import CardComponent from '../Components/cardEmbossed';
 import Person from '@material-ui/icons/PersonRounded';
-import SignUp from '../static/Mobile login-pana.svg';
 import Login from '../static/login.svg';
 
 import {
@@ -24,7 +23,7 @@ import { connect } from 'react-redux';
 import { signUp } from '../redux/actions/student';
 import PropType from 'prop-types';
 
-const Loginstyles = makeStyles((t) => ({
+const styles = makeStyles((t) => ({
   root: {
     height: `calc(100vh - 65px)`,
     alignItems: 'center',
@@ -50,13 +49,26 @@ const Loginstyles = makeStyles((t) => ({
       height: '100%',
     },
   },
+
   login: {
     height: 300,
     width: pxToVw(600),
     [t.breakpoints.down('xs')]: {
-      height: 200,
+      height: 300,
       width: 'auto',
       padding: 12,
+    },
+  },
+  signlogin: {
+    height: 500,
+    padding: 12,
+    width: pxToVw(1200),
+    [t.breakpoints.down('xs')]: {
+      minHeight: 500,
+      height: 'auto',
+      width: 'auto',
+      // padding: 12,
+      // margin:'0 10px'
     },
   },
   inputPh: {
@@ -76,6 +88,14 @@ const Loginstyles = makeStyles((t) => ({
     },
   },
   logInput: {
+    padding: 12,
+    width: pxToVw(464),
+    minWidth: 200,
+    [t.breakpoints.down('xs')]: {
+      minWidth: '70vw',
+    },
+  },
+  signlogInput: {
     padding: 12,
     width: pxToVw(464),
     minWidth: 200,
@@ -91,110 +111,17 @@ const Loginstyles = makeStyles((t) => ({
     alignItems: 'center',
     justifyContent: 'space-around',
   },
+  signinputArea: {
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
   button: {
     background: Theme.boxColor,
     // marginBottom: 12,
     // width: '100%',
     boxShadow: `4px 4px 5px 1px rgba(00,00,00,0.2),-4px -4px 5px 1px rgba(255,255,255,0.2)`,
   },
-  buttonLabel: {
-    color: '#fff',
-    textTransform: 'uppercase',
-  },
-  res: {
-    [t.breakpoints.down('xs')]: {
-      display: 'contents',
-    },
-  },
-}));
-
-const styles = makeStyles((t) => ({
-  root: {
-    // height: `calc(100vh - 65px)`,
-    alignItems: 'center',
-    flexDirection: 'row-reverse',
-    // justifyContent:'center',
-    minHeight: 'calc(100vh - 66px)',
-    justifyContent: 'center',
-    [t.breakpoints.down('xs')]: {
-      // flexDirection:'row',
-    },
-  },
-  baseStyle: {
-    borderRadius: '50%',
-  },
-  boxStyle: {
-    borderRadius: '0%',
-  },
-  input: {
-    paddingLeft: 12,
-    margin: 0,
-    height: '100%',
-    color: Theme.textColor.placeholder,
-    fontWeight: 'bold',
-    '&::placeholder': {
-      color: Theme.textColor.placeholder,
-      // fontFamily: 'Poppins',
-      fontSize: 15,
-      opacity: '.6',
-      // paddingLeft: 12,
-      margin: 0,
-      height: '100%',
-    },
-  },
-  inputPh: {
-    paddingLeft: 0,
-    margin: 0,
-    height: '100%',
-    color: Theme.textColor.placeholder,
-    fontWeight: 'bold',
-    '&::placeholder': {
-      color: Theme.textColor.placeholder,
-      // fontFamily: 'Poppins',
-      fontSize: 15,
-      opacity: '.6',
-      // paddingLeft: 12,
-      margin: 0,
-      height: '100%',
-    },
-  },
-  content: {
-    flexGrow: 1,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    backgroundColor: 'white',
-  },
-
-  released: {
-    boxShadow: '10px 10px 14px 1px rgba(00,00,00,0.2)',
-    background: Theme.buttonColor.color1,
-  },
-  login: {
-    height: 500,
-    width: pxToVw(1200),
-    [t.breakpoints.down('xs')]: {
-      minHeight: 500,
-      height: 'auto',
-      width: 'auto',
-      padding: 12,
-      // margin:'0 10px'
-    },
-  },
-  logInput: {
-    padding: 12,
-    width: pxToVw(464),
-    minWidth: 200,
-    [t.breakpoints.down('xs')]: {
-      minWidth: '70vw',
-    },
-  },
-  inputArea: {
-    alignItems: 'center',
-    justifyContent: 'space-around',
-  },
-  button: {
+  signbutton: {
     background: Theme.boxColor,
     marginBottom: 12,
     width: '40%',
@@ -212,6 +139,12 @@ const styles = makeStyles((t) => ({
       display: 'contents',
     },
   },
+  image: {
+    width: '100%',
+    [t.breakpoints.down('sm')]: {
+      width: '50%',
+    },
+  },
 }));
 
 const SignUpS = (props) => {
@@ -223,6 +156,8 @@ const SignUpS = (props) => {
     ph: '',
     password: '',
     pass: '',
+    collage: '',
+    branch: '',
   });
   const [ok, setOk] = React.useState(false);
   const [visible, setVisible] = React.useState(false);
@@ -252,8 +187,7 @@ const SignUpS = (props) => {
       setOk(true);
     }
   };
-  const sty = Loginstyles();
-  const stye = styles();
+  const sty = styles();
 
   const [loading, setLoading] = React.useState(false);
 
@@ -299,14 +233,19 @@ const SignUpS = (props) => {
   };
   return (
     <>
-      {visibleform && (
-        <div>
-          <Toolbar style={{ background: Theme.boxColor }} />
-          <Grid container className={sty.root}>
-            <Grid item container justify="center" sm={6}>
-              <img src={Login} alt="" style={{ width: pxToVw(721) }} />
-            </Grid>
+      <div>
+        <Toolbar style={{ background: Theme.boxColor }} />
+        <Grid container className={sty.root}>
+          <Grid item container justify="center" sm={4}>
+            <img
+              src={Login}
+              alt=""
+              className={sty.image}
+              // style={{ width: '100%' }}
+            />
+          </Grid>
 
+          {visibleform && (
             <Grid item container justify="center" xs={12} sm={6}>
               <div className={sty.login}>
                 <CardComponent
@@ -421,18 +360,11 @@ const SignUpS = (props) => {
                 </CardComponent>
               </div>
             </Grid>
-          </Grid>
-        </div>
-      )}
-      {!visibleform && (
-        <div>
-          <Toolbar style={{ background: Theme.boxColor }} />
-          <Grid container className={stye.root}>
-            <Grid item container justify="center" sm={4}>
-              <img src={SignUp} alt="" style={{ width: pxToVw(621) }} />
-            </Grid>
-            <Grid container alignItems="center" className={stye.login}>
-              <div>
+          )}
+
+          {!visibleform && (
+            <Grid container alignItems="center" xs={12} sm={8}>
+              <div className={sty.signlogin}>
                 <CardComponent
                   style={{
                     paddingLeft: '10%',
@@ -475,11 +407,11 @@ const SignUpS = (props) => {
                     onSubmit={SignUpUser}
                     style={{ display: 'contents', height: '30%' }}
                   >
-                    <Grid container className={stye.inputArea}>
+                    <Grid container className={sty.signinputArea}>
                       <Grid
                         container
                         justify="center"
-                        className={stye.logInput}
+                        className={sty.signlogInput}
                       >
                         <CardDepth>
                           <Input
@@ -491,14 +423,14 @@ const SignUpS = (props) => {
                             required
                             autoComplete="off"
                             placeholder="Name"
-                            classes={{ input: stye.input }}
+                            classes={{ input: sty.input }}
                           ></Input>
                         </CardDepth>
                       </Grid>
                       <Grid
                         container
                         justify="center"
-                        className={stye.logInput}
+                        className={sty.signlogInput}
                       >
                         <CardDepth>
                           <Input
@@ -510,14 +442,15 @@ const SignUpS = (props) => {
                             required
                             type="email"
                             placeholder="E-mail"
-                            classes={{ input: stye.input }}
+                            classes={{ input: sty.input }}
                           ></Input>
                         </CardDepth>
                       </Grid>
+
                       <Grid
                         container
                         justify="center"
-                        className={stye.logInput}
+                        className={sty.signlogInput}
                       >
                         <CardDepth>
                           <Input
@@ -529,14 +462,14 @@ const SignUpS = (props) => {
                             required
                             type="password"
                             placeholder="Password"
-                            classes={{ input: stye.input }}
+                            classes={{ input: sty.input }}
                           ></Input>
                         </CardDepth>
                       </Grid>
                       <Grid
                         container
                         justify="center"
-                        className={stye.logInput}
+                        className={sty.signlogInput}
                       >
                         <CardDepth>
                           <Input
@@ -549,7 +482,40 @@ const SignUpS = (props) => {
                             type="password"
                             required
                             placeholder="Confirm Password"
-                            classes={{ input: stye.input }}
+                            classes={{ input: sty.input }}
+                          ></Input>
+                        </CardDepth>
+                      </Grid>
+                      <Grid
+                        container
+                        justify="center"
+                        className={sty.signlogInput}
+                      >
+                        <CardDepth>
+                          <Input
+                            id="collage"
+                            value={state.collage}
+                            disableUnderline
+                            onChange={handleChange}
+                            fullWidth
+                            required
+                            autoComplete="off"
+                            placeholder="Collage"
+                            classes={{ input: sty.input }}
+                          ></Input>
+                        </CardDepth>
+                      </Grid>
+                      <Grid container justify="center" className={sty.logInput}>
+                        <CardDepth>
+                          <Input
+                            id="branch"
+                            value={state.branch}
+                            disableUnderline
+                            onChange={handleChange}
+                            fullWidth
+                            required
+                            placeholder="Branch"
+                            classes={{ input: sty.input }}
                           ></Input>
                         </CardDepth>
                       </Grid>
@@ -562,15 +528,15 @@ const SignUpS = (props) => {
                       xs={12}
                     >
                       {/* <Fab
-                      variant="extended"
-                      classes={{ label: stye.buttonLabel }}
-                      className={sty.button}
-                    >
-                      Sign Up
-                    </Fab>{' '}
-                    * */}
+                variant="extended"
+                classes={{ label: stye.buttonLabel }}
+                className={sty.button}
+              >
+                Sign Up
+              </Fab>{' '}
+              * */}
                       <Grid
-                        className={stye.res}
+                        className={sty.signres}
                         justify="center"
                         alignItems="center"
                         container
@@ -578,28 +544,33 @@ const SignUpS = (props) => {
                         <Fab
                           variant="extended"
                           type="submit"
-                          classes={{ label: stye.buttonLabel }}
-                          className={stye.button}
+                          classes={{ label: sty.buttonLabel }}
+                          className={sty.signbutton}
                         >
                           Sign Up {loading && <CircularProgress />}
                         </Fab>
 
                         {/* <Typography
-                        variant="body2"
-                        style={{ color: '#fff', padding: '0 12px 12px' }}
-                      >
-                        OR
-                      </Typography>
+                  variant="body2"
+                  style={{ color: '#fff', padding: '0 12px 12px' }}
+                >
+                  OR
+                </Typography>
 
-                        <Fab
-                        variant="extended"
-                        classes={{ label: stye.buttonLabel }}
-                        className={stye.button}
-                      >
-                        Use Google
-                      </Fab> */}
+                  <Fab
+                  variant="extended"
+                  classes={{ label: stye.buttonLabel }}
+                  className={stye.button}
+                > 
+                  Use Google
+                </Fab> */}
                       </Grid>
-                      <Link to="/login" color="inherit" component={RouterLink}>
+                      <Link
+                        to="/login"
+                        color="inherit"
+                        component={RouterLink}
+                        style={{ paddingBottom: '2%' }}
+                      >
                         Existing user! Login here
                       </Link>
                     </Grid>
@@ -607,9 +578,9 @@ const SignUpS = (props) => {
                 </CardComponent>
               </div>
             </Grid>
-          </Grid>
-        </div>
-      )}
+          )}
+        </Grid>
+      </div>
     </>
   );
 };
