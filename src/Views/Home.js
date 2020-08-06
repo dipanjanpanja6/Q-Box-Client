@@ -17,6 +17,8 @@ import SlideFiveB from '../static/Reading_list.svg';
 import SlideSix from '../static/Report.svg';
 import BigLogo from '../static/logo4.svg';
 import FreeCourse from '../static/Gift-bro.svg';
+import Laptop from '../static/laptop.png';
+import Mobile from '../static/mobile.png';
 
 import { makeStyles, Fab, Toolbar } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
@@ -788,77 +790,31 @@ const available = (sty) => {
       alignItems="center"
       style={{ padding: `70px ${pxToVw(150)} 140px` }}
     >
-      <Grid item sm={6} className={sty.d3}>
-        <CardComponent>
-          <div style={{ padding: '15%', color: '#fff' }}>
-            <Typography
-              variant="h4"
-              style={{ color: '#fff', textAlign: 'center' }}
-              className={sty.heading}
-            >
-              What we provide
-            </Typography>
-            <Typography
-              variant="subtitle1"
-              style={{ lineHeight: 2, paddingTop: 22 }}
-            >
-              1. Unlimited industrial and specific government exam questions
-              with video solutions.
-              <br />
-              <br />
-              2. Concept Book.
-              <br />
-              <br />
-              3. Free Mock Test.
-              <br />
-              <br />
-              4. Quiz every week.
-              <br />
-              <br />
-              5. Gift box containing coding or design technologies based on the
-              preference of the student.
-              <br />
-              <br />
-              6. Effort based report.
-            </Typography>
-          </div>
-        </CardComponent>
+      <Grid item sm={8} lg={8}>
+        <div>
+          <img
+            src={Laptop}
+            alt=""
+            style={{
+              borderRadius: 10,
+              width: '100%',
+              height: '100%',
+            }}
+          />
+        </div>
       </Grid>
-      <Grid item sm={6} className={sty.d3}>
-        <CardComponent>
-          <div style={{ padding: '15%', color: '#fff' }}>
-            <Typography
-              variant="h4"
-              style={{ color: '#fff', textAlign: 'center' }}
-              className={sty.heading}
-            >
-              What we provide
-            </Typography>
-            <Typography
-              variant="subtitle1"
-              style={{ lineHeight: 2, paddingTop: 22 }}
-            >
-              1. Unlimited industrial and specific government exam questions
-              with video solutions.
-              <br />
-              <br />
-              2. Concept Book.
-              <br />
-              <br />
-              3. Free Mock Test.
-              <br />
-              <br />
-              4. Quiz every week.
-              <br />
-              <br />
-              5. Gift box containing coding or design technologies based on the
-              preference of the student.
-              <br />
-              <br />
-              6. Effort based report.
-            </Typography>
-          </div>
-        </CardComponent>
+      <Grid item sm={4} lg={4}>
+        <div>
+          <img
+            src={Mobile}
+            alt=""
+            style={{
+              borderRadius: 10,
+              width: '100%',
+              height: '50%',
+            }}
+          />
+        </div>
       </Grid>
     </Grid>
   );
