@@ -74,7 +74,7 @@ const App = (props) => {
 					<Route path="/practiceset" render={() =>(props.auth===null ?<Loading/>:props.auth===true?<PracticeSet/>: <Redirect to='/login' />)} />
 
 
-					{/* <Route exact path="/test" component={Loader} /> */}
+					<Route exact path="/test" component={Practice} />
 
 
 
