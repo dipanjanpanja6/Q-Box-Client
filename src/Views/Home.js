@@ -194,12 +194,12 @@ inset -3px -4px 7px white`,
   },
   thirdImg: {
     width: '80%',
-    maxHeight: 500,
+    maxHeight: 520,
     [t.breakpoints.down('xs')]: {
       height: '50vh',
       width: '75vw',
       paddingTop: 25,
-      paddingRight: 20,
+      paddingRight: 45,
     },
   },
   fourthCard: {
@@ -395,7 +395,7 @@ const thirdSlide = (classes) => {
         item
         sm={6}
         container
-        style={{ padding: '4%' }}
+        // style={{ padding: '4%' }}
         alignItems="center"
         justify="flex-end"
       >
@@ -954,10 +954,10 @@ const successText = (classes) => {
       container
       alignItems="center"
       justify="center"
-      style={{ width: '100%' }}
+      style={{ width: '100%', paddingTop: 20 }}
     >
       <Typography variant="h4" className={classes.successText}>
-        WAY TO SUCCESS
+        STEPS TO SUCCESS
       </Typography>
     </Grid>
   );
