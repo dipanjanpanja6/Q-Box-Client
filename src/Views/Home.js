@@ -733,7 +733,7 @@ const freeCourseSlide = (classes, register) => {
   return (
     <Grid
       style={{
-        padding: `70px ${pxToVw(150)} 140px`,
+        padding: `30px ${pxToVw(150)} 140px`,
       }}
     >
       <CardComponent>
@@ -788,7 +788,7 @@ const available = (sty) => {
       container
       justify="center"
       alignItems="center"
-      style={{ padding: `70px ${pxToVw(150)} 140px` }}
+      style={{ padding: `70px ${pxToVw(150)} 0px` }}
     >
       <Grid item sm={8} lg={8}>
         <div>
@@ -825,7 +825,7 @@ const Courses = (sty) => {
       container
       justify="center"
       alignItems="center"
-      style={{ padding: `70px ${pxToVw(150)} 140px` }}
+      style={{ padding: `70px ${pxToVw(150)} 100px` }}
     >
       <Grid item sm={6} className={sty.d3}>
         <CardComponent>
@@ -994,10 +994,11 @@ const Home = () => {
 
     coursesText(classes),
     Courses(classes),
+    freeCourseSlide(classes),
+
     availableText(classes),
     available(classes),
 
-    freeCourseSlide(classes),
     sixthSlide(classes),
   ];
   return (
