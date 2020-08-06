@@ -76,6 +76,7 @@ const styles = makeStyles((t) => ({
     width: '100%',
     maxHeight: 500,
     [t.breakpoints.down('xs')]: {
+      paddingBottom: '2%',
       height: '100vw',
       width: '75vw',
     },
@@ -116,11 +117,15 @@ const styles = makeStyles((t) => ({
     },
   },
   fourthSlideParent: {
-    padding: `50px ${pxToVw(47)}`,
+    // padding: `0px ${pxToVw(47)}`,
+    padding: '50px 0',
+    [t.breakpoints.down('xs')]: { padding: '0' },
   },
   fifthSlideParent: {
     padding: 25,
-    [t.breakpoints.down('xs')]: { flexDirection: 'column-reverse' },
+    [t.breakpoints.down('xs')]: {
+      flexDirection: 'column-reverse',
+    },
   },
   fifthSlideParent2: {
     padding: 25,
@@ -193,7 +198,8 @@ inset -3px -4px 7px white`,
     [t.breakpoints.down('xs')]: {
       height: '50vh',
       width: '75vw',
-      paddingTop: 50,
+      paddingTop: 25,
+      paddingRight: 20,
     },
   },
   fourthCard: {
@@ -210,7 +216,7 @@ inset -3px -4px 7px white`,
     textAlign: 'center',
     paddingBottom: 60,
     [t.breakpoints.down('xs')]: {
-      paddingTop: 90,
+      paddingTop: 40,
       paddingBottom: 0,
     },
   },
@@ -225,7 +231,7 @@ inset -3px -4px 7px white`,
     },
   },
   d3: {
-    padding: '0 3%',
+    padding: '4% 3% 0 3%',
   },
 }));
 
@@ -519,7 +525,6 @@ const fourthSlide = (classes) => {
           color: '#fff',
           height: '100%',
           width: '95%',
-          padding: '50px 0',
           lineHeight: '2 !important',
         }}
       >
@@ -667,7 +672,7 @@ const sixthSlide = (classes, register) => {
   return (
     <Grid
       style={{
-        padding: `70px ${pxToVw(150)} 140px`,
+        padding: `70px ${pxToVw(150)} 100px`,
       }}
     >
       <CardComponent>
@@ -733,7 +738,7 @@ const freeCourseSlide = (classes, register) => {
   return (
     <Grid
       style={{
-        padding: `30px ${pxToVw(150)} 140px`,
+        padding: `30px ${pxToVw(150)} 100px`,
       }}
     >
       <CardComponent>
@@ -825,7 +830,7 @@ const Courses = (sty) => {
       container
       justify="center"
       alignItems="center"
-      style={{ padding: `70px ${pxToVw(150)} 100px` }}
+      style={{ padding: `40px ${pxToVw(150)} 100px` }}
     >
       <Grid item sm={6} className={sty.d3}>
         <CardComponent>
