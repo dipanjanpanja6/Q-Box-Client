@@ -1,8 +1,9 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-import { Theme } from "../theme";
+import { Theme, pxToVh, pxToVw } from "../theme";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {
   Box,
   Typography,
@@ -11,20 +12,28 @@ import {
   FormControl,
   NativeSelect,
   Toolbar,
+  IconButton,
+  Fab,
 } from "@material-ui/core";
 import ChartComponent from "../Components/barData";
+import PracticeTabs from "../Components/PracticeTabs";
+
+import MuiExpansionPanel from "@material-ui/core/ExpansionPanel";
+import MuiExpansionPanelSummary from "@material-ui/core/ExpansionPanelSummary";
+import MuiExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 
 const useStyles = makeStyles((t) => ({
   root: {
     flexGrow: 1,
+    overflowX: "hidden",
   },
   dashboardbox: {
     borderWidth: "5px",
-    height: "auto",
+    height: "580px",
     width: "80%",
     marginLeft: "10%",
     marginRight: "10%",
-    marginTop: "20px",
+    marginTop: "10px",
     background: Theme.boxColor,
     borderRadius: "40px",
     boxShadow: Theme.boxShadow,
@@ -42,7 +51,7 @@ const useStyles = makeStyles((t) => ({
     width: 100,
     backgroundColor: Theme.buttonColor.color1,
     borderRadius: "50%",
-    marginTop: 20,
+    marginTop: 10,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -83,7 +92,7 @@ const useStyles = makeStyles((t) => ({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 30,
+    marginTop: 20,
   },
   Scoresub: {
     fontSize: 11,
@@ -153,46 +162,143 @@ const useStyles = makeStyles((t) => ({
       fontSize: 15,
     },
   },
+  currentcoursestext: {
+    color: Theme.textColor.heading,
+    marginTop: 20,
+    fontWeight: "bold",
+    [t.breakpoints.down(960)]: {
+      textAlign: "center",
+    },
+  },
+  courseboxcontainer: {
+    background: Theme.boxColor,
+    borderRadius: 40,
+    paddingBottom: 15,
+    [t.breakpoints.down("md")]: {
+      marginRight: 7.5,
+      marginLeft: 7.5,
+    },
+  },
+  coursenameincoursecontainer: {
+    color: Theme.textColor.color1,
+    fontSize: 18,
+    fontWeight: "bold",
+    textTransform: "uppercase",
+    [t.breakpoints.down(960)]: {
+      fontSize: 16,
+      textAlign: "center",
+    },
+  },
+  coursedescincoursecontainer: {
+    color: Theme.textColor.color1,
+    fontSize: 16,
+    marginTop: 10,
+    [t.breakpoints.down(960)]: {
+      fontSize: 15,
+      textAlign: "center",
+    },
+  },
+  practiceButtonBoxContainer: {
+    display: "flex",
+    justifyContent: "center",
+  },
+  practiceButton: {
+    background: Theme.textColor.heading,
+    color: Theme.textColor.color1,
+    borderRadius: 16,
+    padding: 0,
+    width: 100,
+    "&:hover": {
+      backgroundColor: Theme.textColor.heading2,
+    },
+  },
+  ExpandMoreIconStyle: {
+    color: Theme.textColor.color1,
+    padding: 0,
+  },
+  box: {
+    height: "100%",
+    width: "100%",
+    overflow: "hidden",
+  },
 }));
 
-const BarMapping = () => {
+const RenderCourseBox = () => {
   const classes = useStyles();
-  return (
-    <Box className={classes.bargraphcontainer}>
-      <ChartComponent />
-    </Box>
-  );
-};
+  const [expanded, setExpanded] = React.useState(-1);
 
-const BarContentRender = () => {
-  const classes = useStyles();
-  return (
-    <Box className={classes.barcontainer}>
-      <Box className={classes.selectorcontainer}>
-        <Box>{WeekSelector()}</Box>
-        <Box>{MonthSelector()}</Box>
-      </Box>
-      <Box>{BarMapping()}</Box>
-    </Box>
-  );
-};
+  const handleChange = (panel) => (event, newExpanded) => {
+    setExpanded(newExpanded ? panel : false);
+  };
 
-const weekData = [
-  { day: "SUN", per: 30 },
-  { day: "MON", per: 70 },
-  { day: "TUE", per: 80 },
-  { day: "WED", per: 50 },
-  { day: "THU", per: 90 },
-  { day: "FRI", per: 40 },
-  { day: "SAT", per: 65 },
-];
+  return CourseData.map((data, index) => {
+    return (
+      <ExpansionPanel
+        square
+        expanded={expanded === index}
+        onChange={handleChange(index)}
+        aria-controls="panel1d-content"
+        id="panel1d-header"
+        style={{
+          background: Theme.boxColor,
+          borderRadius: 40,
+          marginTop: 10,
+          paddingTop: 10,
+          marginLeft: 10,
+        }}
+      >
+        <ExpansionPanelSummary
+          expandIcon={
+            <ExpandMoreIcon
+              style={{ color: "#fff" }}
+              className={classes.ExpandMoreIconStyle}
+            />
+          }
+          aria-controls="panel1d-content"
+          id="panel1d-header"
+        >
+          {/*  */}
+
+          <Box>
+            <Typography
+              variant="h5"
+              className={classes.coursenameincoursecontainer}
+            >
+              {data.coursename}
+            </Typography>
+            <Typography
+              variant="h5"
+              className={classes.coursedescincoursecontainer}
+            >
+              {data.coursedesc}
+            </Typography>
+          </Box>
+
+          {/*  */}
+        </ExpansionPanelSummary>
+        <ExpansionPanelDetails>
+          <Box
+            container
+            alignItems="center"
+            justify="center"
+            className={classes.box}
+          >
+            <Box className={classes.practiceButtonBoxContainer}>
+              <PracticeTabs PracticeData={data.practiceData} />
+            </Box>
+          </Box>
+        </ExpansionPanelDetails>
+      </ExpansionPanel>
+    );
+  });
+};
 
 export default function FullWidthGrid() {
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-		<Toolbar style={{background:Theme.boxColor}}/>
+      <Toolbar style={{ background: Theme.boxColor }} />
       <Grid container>
         <Grid item xs={12} md={6}>
           <Box className={classes.dashboardbox}>
@@ -214,14 +320,197 @@ export default function FullWidthGrid() {
           </Box>
         </Grid>
         <Grid item xs={12} md={6}>
-          <Paper className={classes.paper}>
-            <h1>Course</h1>
-          </Paper>
+          <Box mr={1}>
+            <Typography className={classes.currentcoursestext} variant="h5">
+              Current Courses:
+            </Typography>
+            <Box mb={2}>{RenderCourseBox()}</Box>
+          </Box>
         </Grid>
       </Grid>
     </div>
   );
 }
+
+// COURSE DATA
+const CourseData = [
+  {
+    coursename: "Course Name One",
+    coursedesc:
+      "This is is description of course. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+    practiceData: [
+      {
+        tabName: "Practice",
+        tabData: [
+          {
+            subName: "English",
+          },
+          {
+            subName: "Mathematics",
+          },
+          {
+            subName: "History II",
+          },
+          {
+            subName: "English",
+          },
+          {
+            subName: "Mathematics",
+          },
+          {
+            subName: "History II",
+          },
+          {
+            subName: "English",
+          },
+          {
+            subName: "Mathematics",
+          },
+          {
+            subName: "History II",
+          },
+        ],
+      },
+      {
+        tabName: "Weekly Test",
+        tabData: [
+          {
+            subName: "Geography",
+          },
+          {
+            subName: "General Knowledge",
+          },
+        ],
+      },
+      {
+        tabName: "Monthly Test",
+        tabData: [
+          {
+            subName: "English",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    coursename: "Course Name One",
+    coursedesc:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+    practiceData: [
+      {
+        tabName: "Practice",
+        tabData: [
+          {
+            subName: "English",
+          },
+          {
+            subName: "Mathematics",
+          },
+          {
+            subName: "History II",
+          },
+        ],
+      },
+      {
+        tabName: "Monthly Test",
+        tabData: [
+          {
+            subName: "English",
+          },
+          {
+            subName: "Mathematics",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    coursename: "Course Name One",
+    coursedesc:
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+    practiceData: [
+      {
+        tabName: "Practice1",
+        tabData: [
+          {
+            subName: "English",
+          },
+          {
+            subName: "Mathematics",
+          },
+          {
+            subName: "History II",
+          },
+        ],
+      },
+      {
+        tabName: "Practice2",
+        tabData: [
+          {
+            subName: "English",
+          },
+          {
+            subName: "Mathematics",
+          },
+          {
+            subName: "History II",
+          },
+        ],
+      },
+      {
+        tabName: "Practice3",
+        tabData: [
+          {
+            subName: "English",
+          },
+          {
+            subName: "Mathematics",
+          },
+          {
+            subName: "History II",
+          },
+        ],
+      },
+      {
+        tabName: "Practice4",
+        tabData: [
+          {
+            subName: "English",
+          },
+          {
+            subName: "Mathematics",
+          },
+          {
+            subName: "History II",
+          },
+        ],
+      },
+      {
+        tabName: "Practice5",
+        tabData: [
+          {
+            subName: "English",
+          },
+          {
+            subName: "Mathematics",
+          },
+          {
+            subName: "History II",
+          },
+        ],
+      },
+    ],
+  },
+];
+
+const BarMapping = () => {
+  const classes = useStyles();
+  return (
+    <Box className={classes.bargraphcontainer}>
+      <ChartComponent />
+    </Box>
+  );
+};
 
 const WeekSelector = () => {
   const [age, setAge] = React.useState("Week 2");
@@ -268,6 +557,67 @@ const MonthSelector = () => {
     </FormControl>
   );
 };
+
+const ExpansionPanel = withStyles({
+  root: {
+    color: "#fff",
+    // width: "100%",
+    // border: '1px solid rgba(0, 0, 0, .125)',
+    // boxShadow: 'none',
+    // "&:not(:last-child)": {
+    //   borderBottom: 0,
+    // },
+    // "&:before": {
+    //   display: "none",
+    // },
+    // "&$expanded": {
+    //   margin: "auto",
+    // },
+  },
+  expanded: {},
+})(MuiExpansionPanel);
+
+const ExpansionPanelSummary = withStyles({
+  root: {
+    display: "flex",
+    flexDirection: "column",
+    // minHeight: 56,
+    "&$expanded": {
+      minHeight: 0,
+    },
+  },
+  content: {
+    "&$expanded": {},
+  },
+  expanded: {},
+})(MuiExpansionPanelSummary);
+
+const ExpansionPanelDetails = withStyles((theme) => ({
+  root: {},
+}))(MuiExpansionPanelDetails);
+
+const BarContentRender = () => {
+  const classes = useStyles();
+  return (
+    <Box className={classes.barcontainer}>
+      <Box className={classes.selectorcontainer}>
+        <Box>{WeekSelector()}</Box>
+        <Box>{MonthSelector()}</Box>
+      </Box>
+      <Box>{BarMapping()}</Box>
+    </Box>
+  );
+};
+
+const weekData = [
+  { day: "SUN", per: 30 },
+  { day: "MON", per: 70 },
+  { day: "TUE", per: 80 },
+  { day: "WED", per: 50 },
+  { day: "THU", per: 90 },
+  { day: "FRI", per: 40 },
+  { day: "SAT", per: 65 },
+];
 
 const ScoreData = [
   { score: 50, sub: "Non Technical Score" },
