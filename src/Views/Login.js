@@ -118,7 +118,7 @@ const LoginPage = (props) => {
     if (props.auth) {
       setLoading(false);
       if (props.auth.success == true) {
-        history.push('/dashboard');
+        // history.push('/dashboard');
       } else if (props.auth.error) {
         toast.error(props.auth.message);
         console.log(props.auth.message);

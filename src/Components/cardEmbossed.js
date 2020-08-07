@@ -11,7 +11,7 @@ const styles = makeStyles((t) => ({
     width: '100%',
     borderRadius: 70,
     [t.breakpoints.down('xs')]: {
-      borderRadius: 60,
+      borderRadius: 60, 
     },
   },
 }));
