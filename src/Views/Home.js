@@ -990,19 +990,19 @@ const Home = () => {
   const classes = styles();
   const screenDivisions = [
     firstSlide(classes, register),
-    // whyusText(classes),
-    // secondSlide(classes),
-    // fourthSlide(classes),
-    // successText(classes),
-    // thirdSlide(classes),
-    // fifthSlide(classes),
+    whyusText(classes),
+    secondSlide(classes),
+    fourthSlide(classes),
+    successText(classes),
+    thirdSlide(classes),
+    fifthSlide(classes),
 
-    // coursesText(classes),
-    // Courses(classes),
-    // freeCourseSlide(classes),
+    coursesText(classes),
+    Courses(classes),
+    freeCourseSlide(classes),
 
-    // availableText(classes),
-    // available(classes),
+    availableText(classes),
+    available(classes),
 
     sixthSlide(classes),
   ];
