@@ -104,13 +104,11 @@ const styles = makeStyles((t) => ({
     color: Theme.textColor.color2,
     fontWeight: 'thin',
   },
-  iconbutton: {
-    left: '40%',
-    bottom: '110px',
+  iconbutton: {padding:2
   },
   button: {
     borderRadius: '50%',
-    padding: 8,
+    // padding: 8,
     background: Theme.boxColor,
     display: 'flex',
     alignItems: 'center',
@@ -159,20 +157,31 @@ const Footer = () => {
       behavior: 'smooth',
     });
   };
-  return (
+  return (<>
+
+
+
     <Grid container justify="center" alignItems="center" className={sty.root}>
-      <img src={BigLogo} alt="" style={{ height: 170, width: 150 }} />
-      <IconButton
-        onClick={scrollToTop}
-        color="inherit"
+
+      <Grid container style={{width:'100%',justifyContent:'flex-end'}} >
+
+        <IconButton
+          onClick={scrollToTop}
+          color="inherit"
         className={sty.iconbutton}
-      >
-        <div className={sty.button}>
-          <div className={sty.innercircle}>
-            <ArrowUpwardIcon />
+        >
+          <div className={sty.button}>
+            <div className={sty.innercircle}>
+              <ArrowUpwardIcon />
+            </div>
           </div>
-        </div>
-      </IconButton>
+        </IconButton>
+      </Grid>
+
+
+
+      <img src={BigLogo} alt="" style={{ height: 170, width: 150 }} />
+
       <Typography
         variant="subtitle1"
         style={{ padding: '12px 0', fontWeight: 'bold' }}
@@ -346,7 +355,7 @@ const Footer = () => {
         </Grid>
       </Grid>
     </Grid>
-  );
+  </>);
 };
 
 export default Footer;

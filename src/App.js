@@ -29,15 +29,15 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import { connect } from 'react-redux';
 import { checkUser, logout } from './redux/actions/student';
-import PropType from 'prop-types'; 
+import PropType from 'prop-types';
 import Conditions from './Views/conditions';
 
-const App = (props) => { 
+const App = (props) => {
   useEffect(() => {
     props.checkUser();
     console.log('tiger');
   }, [props]);
- 
+
   const out = () => {
     console.log('auth');
     props.logout();
@@ -101,35 +101,33 @@ const App = (props) => {
           />
 
           <Route exact path="/test" component={Practice} />
-
           <Route exact path="/" component={Home} />
           <Route exact path="/about" component={About} />
           <Route exact path="/courses" component={Courses} />
-
+          
           <Route exact path="/login"
-            render={() => props.auth === null ? <Loading /> : props.auth === false ? <Login /> : <Redirect to="/dashboard" />}/>
+            render={() => props.auth === null ? <Loading /> : props.auth === false ? <Login /> : <Redirect to="/dashboard" />} />
+          <Route exact path="/signupOld" component={SignUpOld} />
+          <Route exact path="/signup" component={SignUp} />
+          <Route exact path="/conditions" component={Conditions} />
 
-              <Route exact path="/signupOld" component={SignUpOld} />
-              <Route exact path="/signup" component={SignUp} />
-              <Route exact path="/conditions" component={Conditions} />
-
-              <Route exact component={E4} />
+          <Route exact component={E4} />
         </Switch>
       </Router>
-        <ToastContainer />
+      <ToastContainer />
     </div>
   );
 };
 App.prototype = {
-        auth: PropType.object.isRequired,
+  auth: PropType.object.isRequired,
   checkUser: PropType.func.isRequired,
   logout: PropType.func.isRequired,
 };
 const mapToProp = {
-        logout,
-        checkUser,
+  logout,
+  checkUser,
 };
 const mapToState = (state) => ({
-        auth: state.admin.auth,
+  auth: state.admin.auth,
 });
 export default connect(mapToState, mapToProp)(App);
