@@ -30,7 +30,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { connect } from 'react-redux';
 import { checkUser, logout } from './redux/actions/student';
 import PropType from 'prop-types';
-import Conditions from './Views/conditions';
+import Contact from './Views/contact';
 
 const App = (props) => {
   useEffect(() => {
@@ -58,8 +58,8 @@ const App = (props) => {
               ) : props.auth === true ? (
                 <QBook />
               ) : (
-                    <Redirect to="/login" />
-                  )
+                <Redirect to="/login" />
+              )
             }
           />
           <Route
@@ -71,8 +71,8 @@ const App = (props) => {
               ) : props.auth === true ? (
                 <Dashboard />
               ) : (
-                    <Redirect to="/login" />
-                  )
+                <Redirect to="/login" />
+              )
             }
           />
           <Route
@@ -83,8 +83,8 @@ const App = (props) => {
               ) : props.auth === true ? (
                 <Practice />
               ) : (
-                    <Redirect to="/login" />
-                  )
+                <Redirect to="/login" />
+              )
             }
           />
           <Route
@@ -95,8 +95,8 @@ const App = (props) => {
               ) : props.auth === true ? (
                 <PracticeSet />
               ) : (
-                    <Redirect to="/login" />
-                  )
+                <Redirect to="/login" />
+              )
             }
           />
 
@@ -104,12 +104,23 @@ const App = (props) => {
           <Route exact path="/" component={Home} />
           <Route exact path="/about" component={About} />
           <Route exact path="/courses" component={Courses} />
-          
-          <Route exact path="/login"
-            render={() => props.auth === null ? <Loading /> : props.auth === false ? <Login /> : <Redirect to="/dashboard" />} />
+
+          <Route
+            exact
+            path="/login"
+            render={() =>
+              props.auth === null ? (
+                <Loading />
+              ) : props.auth === false ? (
+                <Login />
+              ) : (
+                <Redirect to="/dashboard" />
+              )
+            }
+          />
           <Route exact path="/signupOld" component={SignUpOld} />
           <Route exact path="/signup" component={SignUp} />
-          <Route exact path="/conditions" component={Conditions} />
+          <Route exact path="/contact" component={Contact} />
 
           <Route exact component={E4} />
         </Switch>

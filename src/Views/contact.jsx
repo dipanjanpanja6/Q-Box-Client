@@ -55,7 +55,7 @@ const styles = makeStyles((t) => ({
   },
 }));
 
-const Conditions = () => {
+const Contact = () => {
   const sty = styles();
 
   return (
@@ -108,4 +108,4 @@ const Conditions = () => {
   );
 };
 
-export default Conditions;
+export default Contact;
