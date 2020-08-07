@@ -31,6 +31,7 @@ import { connect } from 'react-redux';
 import { checkUser, logout } from './redux/actions/student';
 import PropType from 'prop-types';
 import { url } from './config/config';
+import Conditions from './Views/conditions';
 
 const App = (props) => {
   const [auth, setAuth] = useState(false);
@@ -125,6 +126,7 @@ const App = (props) => {
 
           <Route exact path="/signupOld" component={SignUpOld} />
           <Route exact path="/signup" component={SignUp} />
+          <Route exact path="/conditions" component={Conditions} />
 
           <Route exact component={E4} />
         </Switch>
