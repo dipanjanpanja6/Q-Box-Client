@@ -104,8 +104,7 @@ const styles = makeStyles((t) => ({
     color: Theme.textColor.color2,
     fontWeight: 'thin',
   },
-  iconbutton: {padding:2
-  },
+  iconbutton: { padding: 2 },
   button: {
     borderRadius: '50%',
     // padding: 8,
@@ -157,205 +156,226 @@ const Footer = () => {
       behavior: 'smooth',
     });
   };
-  return (<>
+  return (
+    <>
+      <Grid container justify="center" alignItems="center" className={sty.root}>
+        <Grid container style={{ width: '100%', justifyContent: 'flex-end' }}>
+          <IconButton
+            onClick={scrollToTop}
+            color="inherit"
+            className={sty.iconbutton}
+          >
+            <div className={sty.button}>
+              <div className={sty.innercircle}>
+                <ArrowUpwardIcon />
+              </div>
+            </div>
+          </IconButton>
+        </Grid>
 
+        <img src={BigLogo} alt="" style={{ height: 170, width: 150 }} />
 
-
-    <Grid container justify="center" alignItems="center" className={sty.root}>
-
-      <Grid container style={{width:'100%',justifyContent:'flex-end'}} >
-
-        <IconButton
-          onClick={scrollToTop}
-          color="inherit"
-        className={sty.iconbutton}
+        <Typography
+          variant="subtitle1"
+          style={{ padding: '12px 0', fontWeight: 'bold' }}
         >
-          <div className={sty.button}>
-            <div className={sty.innercircle}>
-              <ArrowUpwardIcon />
-            </div>
-          </div>
-        </IconButton>
-      </Grid>
-
-
-
-      <img src={BigLogo} alt="" style={{ height: 170, width: 150 }} />
-
-      <Typography
-        variant="subtitle1"
-        style={{ padding: '12px 0', fontWeight: 'bold' }}
-      >
-        Hunt for Curiosity
-      </Typography>
-
-      <Grid
-        alignItems="center"
-        container
-        style={{ padding: '12px 7%', flexDirection: 'column' }}
-      >
-        <Typography variant="h5">GATE</Typography>
-        <br />
-        <Typography variant="body2">
-          GATE (Graduate Aptitude Test in Engineering) is a computer based
-          examination conducted to test the applicant in engineering & science
-          concepts in the under graduate program. This is a national level
-          examination attempted by around 10 lakh candidates trying to secure a
-          job at PSU's and/or to get admitted to prestigious institutes for
-          Masters. The question papers are set by IISC & IIT's each year.
-          <Link color="textSecondary" component={RouterLink} to="/courses/gate">
-            {' '}
-            know more
-          </Link>
+          Hunt for Curiosity
         </Typography>
-        <br />
-        <Typography variant="h5">TECHNICAL GAMES</Typography>
-        <br />
-        <Typography variant="body2">
-          From statistical data it has been analyzed that almost 80 percent of
-          the students who are in there final year of B. Tech are confused
-          regarding should they pursue higher studies or grab a campus placement
-          from their respective colleges Of Further survey it has been seen that
-          most of the students starts scavenging the internet to acquire study
-          materials for appearing in GATE IES etc. and other government exam and
-          separately they buy study material for recruitment focused tests. This
-          way of approach might seem to be correct but in reality, the students
-          following this path gets lost in the middle and ends up Sacrifice one
-          of the other and enters into a dilemma weather to focus on recruitment
-          drives or government exams Help students from entering into this
-          dilemma, we at QRIOCTY BOX have come up with this unique package
-          called TECHNICAL GAME which has been designed to help students by
-          providing a single game to tackle both recruitment exams and as well
-          as the government exams this course covers all the pillars of
-          recruitment exams involving aptitude logical reasoning and technical
-          section which also includes interview specific core questions created
-          by industry professionals.
-          <Link
-            color="textSecondary"
-            component={RouterLink}
-            to="/courses/techgame"
-          >
-            {' '}
-            know more
-          </Link>
-        </Typography>
-      </Grid>
-      <br />
 
-      <Grid className={sty.social} container>
-        <Grid item className={sty.list} sm={4}>
-          <Typography variant="body1">Terms & Conditions</Typography>
-          <Typography variant="body1">Legal Notice</Typography>
-          <Typography variant="body1">Privacy Policy</Typography>
-          <Typography variant="body1">Contact</Typography>
-        </Grid>
-        <Grid item container justify="space-evenly" alignItems="center" sm={4}>
-          <ButtonComponent
-            style={{ height: 40, width: 40 }}
-            onClick={() => {
-              window.location = 'https://www.instagram.com/qrioctybox/';
-            }}
-          >
-            <CardDepth style={{ height: '80%', width: '80%' }}>
-              <IconButton className={sty.icon}>
-                <InstagramIcon />
-              </IconButton>
-            </CardDepth>
-          </ButtonComponent>
-
-          <ButtonComponent
-            style={{ height: 40, width: 40 }}
-            onClick={() => {
-              window.location = 'https://www.facebook.com/qrioctybox/';
-            }}
-          >
-            <CardDepth style={{ height: '80%', width: '80%' }}>
-              <IconButton className={sty.icon}>
-                <FacebookIcon />
-              </IconButton>
-            </CardDepth>
-          </ButtonComponent>
-          <ButtonComponent
-            style={{ height: 40, width: 40 }}
-            onClick={() => {
-              window.location =
-                'https://www.youtube.com/channel/UCFI607_YfGNUmlw7E6HTu5g';
-            }}
-          >
-            <CardDepth style={{ height: '80%', width: '80%' }}>
-              <IconButton className={sty.icon}>
-                <YouTubeIcon />
-              </IconButton>
-            </CardDepth>
-          </ButtonComponent>
-          <ButtonComponent style={{ height: 40, width: 40 }}>
-            <CardDepth style={{ height: '80%', width: '80%' }}>
-              <IconButton className={sty.icon}>
-                <LinkedInIcon />
-              </IconButton>
-            </CardDepth>
-          </ButtonComponent>
-        </Grid>
-        <Grid item className={sty.newsletter} sm={4}>
-          <Typography variant="h5">Newsletter</Typography>
-
-          <form style={{ display: 'contents' }} onSubmit={subscribe}>
-            <div className={sty.newsletterInput}>
-              <CardDepth>
-                <Input
-                  id="name"
-                  required
-                  onChange={handleChange}
-                  value={state.name}
-                  disableUnderline
-                  fullWidth
-                  autoComplete="off"
-                  type="text"
-                  placeholder="Name"
-                  className={sty.inputBase}
-                  classes={{ input: sty.input }}
-                />
-              </CardDepth>
-            </div>
-            <div className={sty.newsletterInput}>
-              <CardDepth>
-                <Input
-                  className={sty.inputBase}
-                  onChange={handleChange}
-                  value={state.email}
-                  id="email"
-                  type="email"
-                  required
-                  disableUnderline
-                  fullWidth
-                  placeholder="E-mail"
-                  classes={{ input: sty.input }}
-                />
-              </CardDepth>
-            </div>
-            <Fab
-              variant="extended"
-              type="submit"
-              classes={{ label: sty.label }}
-              className={sty.released}
+        <Grid
+          alignItems="center"
+          container
+          style={{ padding: '12px 7%', flexDirection: 'column' }}
+        >
+          <Typography variant="h5">GATE</Typography>
+          <br />
+          <Typography variant="body2">
+            GATE (Graduate Aptitude Test in Engineering) is a computer based
+            examination conducted to test the applicant in engineering & science
+            concepts in the under graduate program. This is a national level
+            examination attempted by around 10 lakh candidates trying to secure
+            a job at PSU's and/or to get admitted to prestigious institutes for
+            Masters. The question papers are set by IISC & IIT's each year.
+            <Link
+              color="textSecondary"
+              component={RouterLink}
+              to="/courses/gate"
             >
-              Register for free
-            </Fab>
-          </form>
+              {' '}
+              know more
+            </Link>
+          </Typography>
+          <br />
+          <Typography variant="h5">TECHNICAL GAMES</Typography>
+          <br />
+          <Typography variant="body2">
+            From statistical data it has been analyzed that almost 80 percent of
+            the students who are in there final year of B. Tech are confused
+            regarding should they pursue higher studies or grab a campus
+            placement from their respective colleges Of Further survey it has
+            been seen that most of the students starts scavenging the internet
+            to acquire study materials for appearing in GATE IES etc. and other
+            government exam and separately they buy study material for
+            recruitment focused tests. This way of approach might seem to be
+            correct but in reality, the students following this path gets lost
+            in the middle and ends up Sacrifice one of the other and enters into
+            a dilemma weather to focus on recruitment drives or government exams
+            Help students from entering into this dilemma, we at QRIOCTY BOX
+            have come up with this unique package called TECHNICAL GAME which
+            has been designed to help students by providing a single game to
+            tackle both recruitment exams and as well as the government exams
+            this course covers all the pillars of recruitment exams involving
+            aptitude logical reasoning and technical section which also includes
+            interview specific core questions created by industry professionals.
+            <Link
+              color="textSecondary"
+              component={RouterLink}
+              to="/courses/techgame"
+            >
+              {' '}
+              know more
+            </Link>
+          </Typography>
         </Grid>
-        {/* <Grid item xs={12} className={sty.pay}>
+        <br />
+
+        <Grid className={sty.social} container>
+          <Grid item className={sty.list} sm={4}>
+            <Typography variant="body1">
+              <RouterLink to="/contact" style={{ color: 'white' }}>
+                Terms & Conditions
+              </RouterLink>
+            </Typography>
+            <Typography variant="body1">
+              <RouterLink to="/contact" style={{ color: 'white' }}>
+                Legal Notice
+              </RouterLink>
+            </Typography>
+            <Typography variant="body1">
+              <RouterLink to="/contact" style={{ color: 'white' }}>
+                Privacy Policy
+              </RouterLink>
+            </Typography>
+            <Typography variant="body1">
+              <RouterLink to="/contact" style={{ color: 'white' }}>
+                Contact
+              </RouterLink>
+            </Typography>
+          </Grid>
+          <Grid
+            item
+            container
+            justify="space-evenly"
+            alignItems="center"
+            sm={4}
+          >
+            <ButtonComponent
+              style={{ height: 40, width: 40 }}
+              onClick={() => {
+                window.location = 'https://www.instagram.com/qrioctybox/';
+              }}
+            >
+              <CardDepth style={{ height: '80%', width: '80%' }}>
+                <IconButton className={sty.icon}>
+                  <InstagramIcon />
+                </IconButton>
+              </CardDepth>
+            </ButtonComponent>
+
+            <ButtonComponent
+              style={{ height: 40, width: 40 }}
+              onClick={() => {
+                window.location = 'https://www.facebook.com/qrioctybox/';
+              }}
+            >
+              <CardDepth style={{ height: '80%', width: '80%' }}>
+                <IconButton className={sty.icon}>
+                  <FacebookIcon />
+                </IconButton>
+              </CardDepth>
+            </ButtonComponent>
+            <ButtonComponent
+              style={{ height: 40, width: 40 }}
+              onClick={() => {
+                window.location =
+                  'https://www.youtube.com/channel/UCFI607_YfGNUmlw7E6HTu5g';
+              }}
+            >
+              <CardDepth style={{ height: '80%', width: '80%' }}>
+                <IconButton className={sty.icon}>
+                  <YouTubeIcon />
+                </IconButton>
+              </CardDepth>
+            </ButtonComponent>
+            <ButtonComponent style={{ height: 40, width: 40 }}>
+              <CardDepth style={{ height: '80%', width: '80%' }}>
+                <IconButton className={sty.icon}>
+                  <LinkedInIcon />
+                </IconButton>
+              </CardDepth>
+            </ButtonComponent>
+          </Grid>
+          <Grid item className={sty.newsletter} sm={4}>
+            <Typography variant="h5">Newsletter</Typography>
+
+            <form style={{ display: 'contents' }} onSubmit={subscribe}>
+              <div className={sty.newsletterInput}>
+                <CardDepth>
+                  <Input
+                    id="name"
+                    required
+                    onChange={handleChange}
+                    value={state.name}
+                    disableUnderline
+                    fullWidth
+                    autoComplete="off"
+                    type="text"
+                    placeholder="Name"
+                    className={sty.inputBase}
+                    classes={{ input: sty.input }}
+                  />
+                </CardDepth>
+              </div>
+              <div className={sty.newsletterInput}>
+                <CardDepth>
+                  <Input
+                    className={sty.inputBase}
+                    onChange={handleChange}
+                    value={state.email}
+                    id="email"
+                    type="email"
+                    required
+                    disableUnderline
+                    fullWidth
+                    placeholder="E-mail"
+                    classes={{ input: sty.input }}
+                  />
+                </CardDepth>
+              </div>
+              <Fab
+                variant="extended"
+                type="submit"
+                classes={{ label: sty.label }}
+                className={sty.released}
+              >
+                Register for free
+              </Fab>
+            </form>
+          </Grid>
+          {/* <Grid item xs={12} className={sty.pay}>
 
 				</Grid> */}
-        <Grid item xs={12} className={sty.copy}>
-          <p>
-            {'© '}
-            {new Date().getFullYear()} Qriocty Box Education Service. All rights
-            reserved{' '}
-          </p>
+          <Grid item xs={12} className={sty.copy}>
+            <p>
+              {'© '}
+              {new Date().getFullYear()} Qriocty Box Education Service. All
+              rights reserved{' '}
+            </p>
+          </Grid>
         </Grid>
       </Grid>
-    </Grid>
-  </>);
+    </>
+  );
 };
 
 export default Footer;
